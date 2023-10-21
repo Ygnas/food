@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Food</string>
+    <string name="button_addFood">Add Food</string>
+    <string name="hint_foodTitle">Food Title</string>
+    <string name="hint_foodDescription">Food Description</string>
+    <string name="menu_addFood">Add</string>
+    <string name="menu_cancelFood">Cancel</string>
+    <string name="save_food">Save Food</string>
+    <string name="button_addImage">Add Image</string>
+    <string name="enter_food_title">Please enter a Food Title</string>
+    <string name="select_food_image">Select image</string>
+    <string name="change_food_image">Change image</string>
+    <string name="button_location">Set Location</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="menu_deleteFood">Delete</string>
+    <string name="title_activity_food_maps">Map of All Foods </string>
+    <string name="title_activity_food_map">FoodMapActivity</string>
 </resources>
