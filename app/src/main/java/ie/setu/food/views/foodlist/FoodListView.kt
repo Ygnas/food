@@ -39,7 +39,7 @@ class FoodListView : AppCompatActivity(), FoodListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> { presenter.doAddPlacemark() }
-            R.id.item_map -> { presenter.doShowPlacemarksMap() }
+
         }
         return super.onOptionsItemSelected(item)
     }

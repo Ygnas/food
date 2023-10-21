@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import ie.setu.food.activities.FoodMapsActivity
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
 import ie.setu.food.views.food.FoodView
@@ -34,11 +33,6 @@ class FoodListPresenter(val view: FoodListView) {
         launcherIntent.putExtra("placemark_edit", food)
         position = pos
         refreshIntentLauncher.launch(launcherIntent)
-    }
-
-    fun doShowPlacemarksMap() {
-        val launcherIntent = Intent(view, FoodMapsActivity::class.java)
-        mapIntentLauncher.launch(launcherIntent)
     }
 
     private fun registerRefreshCallback() {
