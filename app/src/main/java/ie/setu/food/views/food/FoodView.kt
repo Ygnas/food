@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodBinding
 import ie.setu.food.models.FoodModel
+import timber.log.Timber
 
 class FoodView : AppCompatActivity() {
 
@@ -80,6 +81,14 @@ class FoodView : AppCompatActivity() {
         if (food.image != Uri.EMPTY) {
             binding.chooseImage.setText(R.string.change_food_image)
         }
+    }
+
+    fun updateImage(image: Uri) {
+        Timber.i("Image updated")
+        Picasso.get()
+            .load(image)
+            .into(binding.foodImage)
+        binding.chooseImage.setText(R.string.change_food_image)
     }
 }
 

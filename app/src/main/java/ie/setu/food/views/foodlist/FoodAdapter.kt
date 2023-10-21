@@ -28,14 +28,14 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
 
     override fun getItemCount(): Int = foods.size
 
-    class MainHolder(private val binding : CardFoodBinding) :
+    class MainHolder(private val binding: CardFoodBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(food: FoodModel, listener: FoodListener) {
             binding.foodTitle.text = food.title
             binding.description.text = food.description
-            Picasso.get().load(food.image).resize(200,200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onFoodClick(food,adapterPosition) }
+            Picasso.get().load(food.image).resize(200, 200).into(binding.imageIcon)
+            binding.root.setOnClickListener { listener.onFoodClick(food, adapterPosition) }
         }
     }
 }
