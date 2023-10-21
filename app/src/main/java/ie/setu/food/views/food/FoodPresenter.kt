@@ -10,6 +10,7 @@ import ie.setu.food.helpers.showImagePicker
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
 import ie.setu.food.models.Location
+import ie.setu.food.views.editlocation.EditLocationView
 import timber.log.Timber
 
 class FoodPresenter(private val view: FoodView) {
@@ -17,8 +18,8 @@ class FoodPresenter(private val view: FoodView) {
     var food = FoodModel()
     var app: MainApp = view.application as MainApp
     var binding: ActivityFoodBinding = ActivityFoodBinding.inflate(view.layoutInflater)
-    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
-    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     var edit = false
 
     init {
@@ -29,6 +30,7 @@ class FoodPresenter(private val view: FoodView) {
         }
         registerMapCallback()
     }
+
     fun doAddOrSave(title: String, description: String) {
         food.title = title
         food.description = description
@@ -40,19 +42,34 @@ class FoodPresenter(private val view: FoodView) {
         view.setResult(RESULT_OK)
         view.finish()
     }
+
     fun doCancel() {
         view.finish()
     }
+
     fun doDelete() {
         view.setResult(99)
         app.foods.delete(food)
         view.finish()
     }
+
     fun doSelectImage() {
-        showImagePicker(imageIntentLauncher,view)
+        showImagePicker(imageIntentLauncher, view)
     }
 
-    fun cachePlacemark (title: String, description: String) {
+    fun doSetLocation() {
+        val location = Location(52.245696, -7.139102, 15f)
+        if (food.zoom != 0f) {
+            location.lat = food.lat
+            location.lng = food.lng
+            location.zoom = food.zoom
+        }
+        val launcherIntent = Intent(view, EditLocationView::class.java)
+        launcherIntent.putExtra("location", location)
+        mapIntentLauncher.launch(launcherIntent)
+    }
+
+    fun cachePlacemark(title: String, description: String) {
         food.title = title;
         food.description = description
     }
@@ -66,12 +83,18 @@ class FoodPresenter(private val view: FoodView) {
                     AppCompatActivity.RESULT_OK -> {
                         if (result.data != null) {
                             Timber.i("Got Location ${result.data.toString()}")
-                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            val location =
+                                result.data!!.extras?.getParcelable<Location>("location")!!
                             Timber.i("Location == $location")
                             food.lat = location.lat
                             food.lng = location.lng
                             food.zoom = location.zoom
                         } // end of if
                     }
-                    AppCompatActivity.RESULT_CANCELED -> { } else -> { }
-                }            }    }}
+
+                    AppCompatActivity.RESULT_CANCELED -> {}
+                    else -> {}
+                }
+            }
+    }
+}

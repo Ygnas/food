@@ -41,6 +41,7 @@ class FoodJSONStore(private val context: Context) : FoodStore {
         serialize()
     }
 
+
     override fun update(food: FoodModel) {
         val foodList = findAll() as ArrayList<FoodModel>
         var foundFood: FoodModel? = foodList.find { p -> p.id == food.id }

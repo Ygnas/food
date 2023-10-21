@@ -38,8 +38,13 @@ class FoodListView : AppCompatActivity(), FoodListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_add -> { presenter.doAddPlacemark() }
+            R.id.item_add -> {
+                presenter.doAddPlacemark()
+            }
 
+            R.id.item_map -> {
+                presenter.doShowPlacemarksMap()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -55,11 +60,10 @@ class FoodListView : AppCompatActivity(), FoodListener {
     }
 
     fun onRefresh() {
-        binding.recyclerView.adapter?.
-        notifyItemRangeChanged(0,presenter.getPlacemarks().size)
+        binding.recyclerView.adapter?.notifyItemRangeChanged(0, presenter.getPlacemarks().size)
     }
 
-    fun onDelete(position : Int) {
+    fun onDelete(position: Int) {
         binding.recyclerView.adapter?.notifyItemRemoved(position)
     }
 }
