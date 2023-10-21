@@ -22,21 +22,21 @@ class FoodListPresenter(val view: FoodListView) {
         registerRefreshCallback()
     }
 
-    fun getPlacemarks() = app.foods.findAll()
+    fun getFoods() = app.foods.findAll()
 
-    fun doAddPlacemark() {
+    fun doAddFood() {
         val launcherIntent = Intent(view, FoodView::class.java)
         refreshIntentLauncher.launch(launcherIntent)
     }
 
-    fun doEditPlacemark(food: FoodModel, pos: Int) {
+    fun doEditFood(food: FoodModel, pos: Int) {
         val launcherIntent = Intent(view, FoodView::class.java)
-        launcherIntent.putExtra("placemark_edit", food)
+        launcherIntent.putExtra("food_edit", food)
         position = pos
         refreshIntentLauncher.launch(launcherIntent)
     }
 
-    fun doShowPlacemarksMap() {
+    fun doShowFoodsMap() {
         val launcherIntent = Intent(view, FoodMapsActivity::class.java)
         mapIntentLauncher.launch(launcherIntent)
     }

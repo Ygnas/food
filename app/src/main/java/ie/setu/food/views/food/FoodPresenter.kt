@@ -23,10 +23,10 @@ class FoodPresenter(private val view: FoodView) {
     var edit = false
 
     init {
-        if (view.intent.hasExtra("placemark_edit")) {
+        if (view.intent.hasExtra("food_edit")) {
             edit = true
-            food = view.intent.extras?.getParcelable("placemark_edit")!!
-            view.showPlacemark(food)
+            food = view.intent.extras?.getParcelable("food_edit")!!
+            view.showFood(food)
         }
         registerMapCallback()
     }
@@ -69,7 +69,7 @@ class FoodPresenter(private val view: FoodView) {
         mapIntentLauncher.launch(launcherIntent)
     }
 
-    fun cachePlacemark(title: String, description: String) {
+    fun cacheFood(title: String, description: String) {
         food.title = title;
         food.description = description
     }

@@ -32,7 +32,7 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(food: FoodModel, listener: FoodListener) {
-            binding.placemarkTitle.text = food.title
+            binding.foodTitle.text = food.title
             binding.description.text = food.description
             Picasso.get().load(food.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onFoodClick(food,adapterPosition) }
