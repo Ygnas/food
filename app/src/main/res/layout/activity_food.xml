@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/placemarkTitle"
+                    android:id="@+id/foodTitle"
                     android:layout_width="0dp"
                     android:layout_height="41dp"
                     android:layout_marginStart="8dp"
@@ -55,13 +55,13 @@
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/placemarkDescription"
+                    app:layout_constraintBottom_toTopOf="@+id/foodDescription"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/placemarkDescription"
+                    android:id="@+id/foodDescription"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -79,7 +79,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/btnAdd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/placemarkTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/foodTitle" />
 
                 <Button
                     android:id="@+id/btnAdd"
@@ -96,8 +96,8 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/placemarkLocation"
-                    app:layout_constraintTop_toBottomOf="@+id/placemarkDescription" />
+                    app:layout_constraintStart_toEndOf="@+id/foodLocation"
+                    app:layout_constraintTop_toBottomOf="@+id/foodDescription" />
 
                 <Button
                     android:id="@+id/chooseImage"
@@ -114,13 +114,13 @@
                     android:text="@string/button_addImage"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/placemarkImage"
+                    app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/placemarkLocation"
+                    app:layout_constraintStart_toEndOf="@+id/foodLocation"
                     app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
                 <ImageView
-                    android:id="@+id/placemarkImage"
+                    android:id="@+id/foodImage"
                     android:layout_width="401dp"
                     android:layout_height="414dp"
                     android:layout_marginStart="8dp"
@@ -134,7 +134,7 @@
                     app:srcCompat="@mipmap/ic_launcher" />
 
                 <Button
-                    android:id="@+id/placemarkLocation"
+                    android:id="@+id/foodLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -148,7 +148,7 @@
                     android:text="@string/button_location"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/placemarkImage"
+                    app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toStartOf="@+id/chooseImage"
                     app:layout_constraintHorizontal_bias="0.421"
                     app:layout_constraintStart_toStartOf="parent"

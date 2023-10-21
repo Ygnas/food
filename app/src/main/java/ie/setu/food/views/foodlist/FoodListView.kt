@@ -38,28 +38,32 @@ class FoodListView : AppCompatActivity(), FoodListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_add -> { presenter.doAddPlacemark() }
+            R.id.item_add -> {
+                presenter.doAddFood()
+            }
 
+            R.id.item_map -> {
+                presenter.doShowFoodsMap()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onFoodClick(food: FoodModel, position: Int) {
         this.position = position
-        presenter.doEditPlacemark(food, this.position)
+        presenter.doEditFood(food, this.position)
     }
 
     private fun loadFoods() {
-        binding.recyclerView.adapter = FoodAdapter(presenter.getPlacemarks(), this)
+        binding.recyclerView.adapter = FoodAdapter(presenter.getFoods(), this)
         onRefresh()
     }
 
     fun onRefresh() {
-        binding.recyclerView.adapter?.
-        notifyItemRangeChanged(0,presenter.getPlacemarks().size)
+        binding.recyclerView.adapter?.notifyItemRangeChanged(0, presenter.getFoods().size)
     }
 
-    fun onDelete(position : Int) {
+    fun onDelete(position: Int) {
         binding.recyclerView.adapter?.notifyItemRemoved(position)
     }
 }

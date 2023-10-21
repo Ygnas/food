@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import ie.setu.food.activities.FoodMapsActivity
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
 import ie.setu.food.views.food.FoodView
@@ -11,8 +12,8 @@ import ie.setu.food.views.food.FoodView
 class FoodListPresenter(val view: FoodListView) {
 
     var app: MainApp
-    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
-    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private var position: Int = 0
 
     init {
@@ -21,18 +22,23 @@ class FoodListPresenter(val view: FoodListView) {
         registerRefreshCallback()
     }
 
-    fun getPlacemarks() = app.foods.findAll()
+    fun getFoods() = app.foods.findAll()
 
-    fun doAddPlacemark() {
+    fun doAddFood() {
         val launcherIntent = Intent(view, FoodView::class.java)
         refreshIntentLauncher.launch(launcherIntent)
     }
 
-    fun doEditPlacemark(food: FoodModel, pos: Int) {
+    fun doEditFood(food: FoodModel, pos: Int) {
         val launcherIntent = Intent(view, FoodView::class.java)
-        launcherIntent.putExtra("placemark_edit", food)
+        launcherIntent.putExtra("food_edit", food)
         position = pos
         refreshIntentLauncher.launch(launcherIntent)
+    }
+
+    fun doShowFoodsMap() {
+        val launcherIntent = Intent(view, FoodMapsActivity::class.java)
+        mapIntentLauncher.launch(launcherIntent)
     }
 
     private fun registerRefreshCallback() {
@@ -45,8 +51,10 @@ class FoodListPresenter(val view: FoodListView) {
                     if (it.resultCode == 99) view.onDelete(position)
             }
     }
+
     private fun registerMapCallback() {
-        mapIntentLauncher = view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-        {  }
+        mapIntentLauncher =
+            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { }
     }
 }

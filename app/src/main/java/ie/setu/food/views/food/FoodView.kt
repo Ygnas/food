@@ -10,7 +10,6 @@ import com.squareup.picasso.Picasso
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodBinding
 import ie.setu.food.models.FoodModel
-import timber.log.Timber.i
 
 class FoodView : AppCompatActivity() {
 
@@ -29,16 +28,24 @@ class FoodView : AppCompatActivity() {
 
         presenter = FoodPresenter(this)
 
+        binding.chooseImage.setOnClickListener {
+            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString())
+            presenter.doSelectImage()
+        }
 
+        binding.foodLocation.setOnClickListener {
+            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString())
+            presenter.doSetLocation()
+        }
 
         binding.btnAdd.setOnClickListener {
-            if (binding.placemarkTitle.text.toString().isEmpty()) {
+            if (binding.foodTitle.text.toString().isEmpty()) {
                 Snackbar.make(binding.root, R.string.enter_food_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
                 presenter.doAddOrSave(
-                    binding.placemarkTitle.text.toString(),
-                    binding.placemarkDescription.text.toString()
+                    binding.foodTitle.text.toString(),
+                    binding.foodDescription.text.toString()
                 )
             }
         }
@@ -56,7 +63,6 @@ class FoodView : AppCompatActivity() {
             R.id.item_delete -> {
                 presenter.doDelete()
             }
-
             R.id.item_cancel -> {
                 presenter.doCancel()
             }
@@ -64,13 +70,13 @@ class FoodView : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun showPlacemark(food: FoodModel) {
-        binding.placemarkTitle.setText(food.title)
-        binding.placemarkDescription.setText(food.description)
+    fun showFood(food: FoodModel) {
+        binding.foodTitle.setText(food.title)
+        binding.foodDescription.setText(food.description)
         binding.btnAdd.setText(R.string.save_food)
         Picasso.get()
             .load(food.image)
-            .into(binding.placemarkImage)
+            .into(binding.foodImage)
         if (food.image != Uri.EMPTY) {
             binding.chooseImage.setText(R.string.change_food_image)
         }
