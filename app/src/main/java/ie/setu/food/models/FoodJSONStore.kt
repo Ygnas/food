@@ -42,13 +42,23 @@ class FoodJSONStore(private val context: Context) : FoodStore {
     }
 
     override fun update(food: FoodModel) {
-        TODO("Not yet implemented")
+        val foodList = findAll() as ArrayList<FoodModel>
+        var foundFood: FoodModel? = foodList.find { p -> p.id == food.id }
+        if (foundFood != null) {
+            foundFood.title = food.title
+            foundFood.description = food.description
+            foundFood.image = food.image
+            foundFood.lat = food.lat
+            foundFood.lng = food.lng
+            foundFood.zoom = food.zoom
+        }
+        serialize()
     }
 
     override fun delete(food: FoodModel) {
-        TODO("Not yet implemented")
+        foods.remove(food)
+        serialize()
     }
-
 
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(foods, listType)

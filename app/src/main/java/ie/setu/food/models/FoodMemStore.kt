@@ -10,31 +10,41 @@ internal fun getId(): Long {
 
 class FoodMemStore: FoodStore {
 
-    val placemarks = ArrayList<FoodModel>()
+    val foods = ArrayList<FoodModel>()
 
     override fun findAll(): List<FoodModel> {
-        return placemarks
+        return foods
     }
 
     override fun findById(id: Long): FoodModel? {
-        TODO("Not yet implemented")
+        val foundFood: FoodModel? = foods.find { it.id == id }
+        return foundFood
     }
 
-    override fun create(placemark: FoodModel) {
-        placemark.id = getId()
-        placemarks.add(placemark)
+    override fun create(food: FoodModel) {
+        food.id = getId()
+        foods.add(food)
         logAll()
     }
 
     override fun update(food: FoodModel) {
-        TODO("Not yet implemented")
+        val foundFood: FoodModel? = foods.find { p -> p.id == food.id }
+        if (foundFood != null) {
+            foundFood.title = food.title
+            foundFood.description = food.description
+            foundFood.image = food.image
+            foundFood.lat = food.lat
+            foundFood.lng = food.lng
+            foundFood.zoom = food.zoom
+            logAll()
+        }
     }
 
-    override fun delete(placemark: FoodModel) {
-        placemarks.remove(placemark)
+    override fun delete(food: FoodModel) {
+        foods.remove(food)
     }
 
     fun logAll() {
-        placemarks.forEach{ i("$it") }
+        foods.forEach { i("$it") }
     }
 }
