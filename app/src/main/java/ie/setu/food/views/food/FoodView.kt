@@ -1,10 +1,12 @@
 package ie.setu.food.views.food
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodBinding
 import ie.setu.food.models.FoodModel
@@ -61,5 +63,16 @@ class FoodView : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-}
+
+    fun showPlacemark(food: FoodModel) {
+        binding.placemarkTitle.setText(food.title)
+        binding.placemarkDescription.setText(food.description)
+        binding.btnAdd.setText(R.string.save_food)
+        Picasso.get()
+            .load(food.image)
+            .into(binding.placemarkImage)
+        if (food.image != Uri.EMPTY) {
+            binding.chooseImage.setText(R.string.change_food_image)
+        }
+    }
 

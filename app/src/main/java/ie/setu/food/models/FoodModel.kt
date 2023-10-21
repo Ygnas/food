@@ -4,6 +4,8 @@ import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+var image: Uri = Uri.EMPTY
+
 @Parcelize
 data class FoodModel(var id: Long = 0,
                           var title: String = "",
