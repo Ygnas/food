@@ -17,10 +17,18 @@
         android:theme="@style/Theme.Food"
         tools:targetApi="31">
         <activity
+            android:name=".views.gallery.GalleryPresenter"
+            android:exported="false" />
+        <activity
+            android:name=".views.gallery.GalleryView"
+            android:exported="false"
+            android:label="@string/title_activity_food_maps"
+            android:theme="@style/Theme.Food" />
+        <activity
             android:name=".activities.FoodMapsActivity"
             android:exported="false"
             android:label="@string/title_activity_food_maps"
-            android:theme="@style/Theme.Food" >
+            android:theme="@style/Theme.Food">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -39,6 +47,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -46,11 +55,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".views.food.FoodView"
+        <activity
+            android:name=".views.food.FoodView"
             android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
     </application>
+
 </manifest>
