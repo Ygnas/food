@@ -18,19 +18,19 @@ class FoodPresenter(private val view: FoodView) {
     var food = FoodModel()
     var app: MainApp = view.application as MainApp
     var binding: ActivityFoodBinding = ActivityFoodBinding.inflate(view.layoutInflater)
-    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
-    private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
 
     init {
-        if (view.intent.hasExtra("food_edit")) {
+        if (view.intent.hasExtra("placemark_edit")) {
             edit = true
-            food = view.intent.extras?.getParcelable("food_edit")!!
+            food = view.intent.extras?.getParcelable("placemark_edit")!!
             view.showFood(food)
         }
+        registerImagePickerCallback()
         registerMapCallback()
     }
-
     fun doAddOrSave(title: String, description: String) {
         food.title = title
         food.description = description
@@ -74,7 +74,22 @@ class FoodPresenter(private val view: FoodView) {
         food.description = description
     }
 
-
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    AppCompatActivity.RESULT_OK -> {
+                        if (result.data != null) {
+                            Timber.i("Got Result ${result.data!!.data}")
+                            food.image = result.data!!.data!!
+                            view.contentResolver.takePersistableUriPermission(food.image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            view.updateImage(food.image)
+                        } // end of if
+                    }
+                    AppCompatActivity.RESULT_CANCELED -> { } else -> { }
+                }            }    }
     private fun registerMapCallback() {
         mapIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
