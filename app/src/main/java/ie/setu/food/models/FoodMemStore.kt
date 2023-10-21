@@ -17,7 +17,8 @@ class FoodMemStore: FoodStore {
     }
 
     override fun findById(id: Long): FoodModel? {
-        TODO("Not yet implemented")
+        val foundFood: FoodModel? = foods.find { it.id == id }
+        return foundFood
     }
 
     override fun create(food: FoodModel) {
@@ -27,7 +28,16 @@ class FoodMemStore: FoodStore {
     }
 
     override fun update(food: FoodModel) {
-        TODO("Not yet implemented")
+        val foundFood: FoodModel? = foods.find { p -> p.id == food.id }
+        if (foundFood != null) {
+            foundFood.title = food.title
+            foundFood.description = food.description
+            foundFood.image = food.image
+            foundFood.lat = food.lat
+            foundFood.lng = food.lng
+            foundFood.zoom = food.zoom
+            logAll()
+        }
     }
 
     override fun delete(food: FoodModel) {
@@ -35,6 +45,6 @@ class FoodMemStore: FoodStore {
     }
 
     fun logAll() {
-        foods.forEach{ i("$it") }
+        foods.forEach { i("$it") }
     }
 }
