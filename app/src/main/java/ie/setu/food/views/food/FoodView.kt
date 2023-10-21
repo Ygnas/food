@@ -75,4 +75,5 @@ class FoodView : AppCompatActivity() {
             binding.chooseImage.setText(R.string.change_food_image)
         }
     }
+}
 
