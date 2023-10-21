@@ -34,7 +34,10 @@ class FoodView : AppCompatActivity() {
                 Snackbar.make(binding.root, R.string.enter_food_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                presenter.doAddOrSave(binding.placemarkTitle.text.toString(), binding.placemarkDescription.text.toString())
+                presenter.doAddOrSave(
+                    binding.placemarkTitle.text.toString(),
+                    binding.placemarkDescription.text.toString()
+                )
             }
         }
     }
@@ -51,10 +54,12 @@ class FoodView : AppCompatActivity() {
             R.id.item_delete -> {
                 presenter.doDelete()
             }
+
             R.id.item_cancel -> {
                 presenter.doCancel()
             }
         }
         return super.onOptionsItemSelected(item)
     }
+}
 
