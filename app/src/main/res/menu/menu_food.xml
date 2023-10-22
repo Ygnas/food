@@ -6,9 +6,9 @@
         android:visible="false"
         android:id="@+id/item_delete"
         android:title="@string/menu_deleteFood"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/item_cancel"
         android:title="@string/menu_cancelFood"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 </menu>
