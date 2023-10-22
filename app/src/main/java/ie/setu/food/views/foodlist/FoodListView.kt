@@ -3,8 +3,12 @@ package ie.setu.food.views.foodlist
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodListBinding
 import ie.setu.food.main.MainApp
@@ -15,6 +19,7 @@ class FoodListView : AppCompatActivity(), FoodListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityFoodListBinding
     private lateinit var presenter: FoodListPresenter
+    private lateinit var drawerLayout: DrawerLayout
     private var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +31,11 @@ class FoodListView : AppCompatActivity(), FoodListener {
         presenter = FoodListPresenter(this)
         app = application as MainApp
 
+        drawer()
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView.setNavigationItemSelectedListener { menuItem ->
+            onNavigationItemSelected(menuItem)
+        }
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         loadFoods()
@@ -34,6 +44,20 @@ class FoodListView : AppCompatActivity(), FoodListener {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    fun drawer() {
+        drawerLayout = findViewById(R.id.drawer_layout)
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            R.string.drawer_open,
+            R.string.drawer_close
+        )
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -45,8 +69,29 @@ class FoodListView : AppCompatActivity(), FoodListener {
             R.id.item_map -> {
                 presenter.doShowFoodsMap()
             }
+            android.R.id.home -> {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START)
+                }
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add -> {
+                presenter.doAddFood()
+            }
+            R.id.item_map -> {
+                presenter.doShowFoodsMap()
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START, false)
+        return true
     }
 
     override fun onFoodClick(food: FoodModel, position: Int) {

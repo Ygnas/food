@@ -7,10 +7,14 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/button_addFood"
         app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/item_gallery"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/button_gallery"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/item_map"
         android:icon="@android:drawable/ic_menu_mapmode"
-        android:title="@string/button_addFood"
+        android:title="@string/title_activity_food_maps"
         app:showAsAction="ifRoom"/>
 </menu>
