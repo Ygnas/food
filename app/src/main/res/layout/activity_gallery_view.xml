@@ -10,6 +10,7 @@
         android:id="@+id/appBarLayout3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,10 +19,7 @@
             android:id="@+id/toolbargallery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@color/colorPrimary"
-            android:theme="?attr/actionBarTheme" />
+            app:titleTextColor="@color/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
