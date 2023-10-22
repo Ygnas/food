@@ -88,6 +88,9 @@ class FoodListView : AppCompatActivity(), FoodListener {
             R.id.item_add -> {
                 presenter.doAddFood()
             }
+            R.id.item_gallery -> {
+                presenter.doShowGallery()
+            }
             R.id.item_map -> {
                 presenter.doShowFoodsMap()
             }

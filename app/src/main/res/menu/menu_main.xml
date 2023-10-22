@@ -19,3 +19,4 @@
         android:icon="@android:drawable/ic_menu_mapmode"
         android:title="@string/button_addFood"
         app:showAsAction="ifRoom" />
+</menu>
