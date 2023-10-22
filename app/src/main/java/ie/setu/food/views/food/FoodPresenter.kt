@@ -23,9 +23,9 @@ class FoodPresenter(private val view: FoodView) {
     var edit = false
 
     init {
-        if (view.intent.hasExtra("placemark_edit")) {
+        if (view.intent.hasExtra("food_edit")) {
             edit = true
-            food = view.intent.extras?.getParcelable("placemark_edit")!!
+            food = view.intent.extras?.getParcelable("food_edit")!!
             view.showFood(food)
         }
         registerImagePickerCallback()
