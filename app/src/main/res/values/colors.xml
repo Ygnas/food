@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#4c90af</color>
-    <color name="status_bar_color">#4c90af</color>
+    <color name="white">#FFDF9C</color>
+    <color name="colorPrimary">@color/md_Background</color>
+    <color name="colorPrimaryDark">@color/md_Background</color>
+
+    <color name="colorAccent">#1C1B1F</color>
+    <color name="status_bar_color">@color/md_Background</color>
+
+    <!--  Material colors generated with https://m3.material.io/theme-builder#/custom -->
+    <color name="md_Primary">#00344c</color>
+    <color name="md_Secondary">#374955</color>
+    <color name="md_Tertiary">#342b4b</color>
+    <color name="md_Error">#690005</color>
+    <color name="md_Background">#191c1e</color>
+    <color name="md_OnBackground">#e2e2e5</color>
+    <color name="md_Outline">#8b9198</color>
+
+
 </resources>

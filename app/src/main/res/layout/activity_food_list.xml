@@ -16,16 +16,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         android:fitsSystemWindows="true"
         app:elevation="0dip"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            android:background="@color/md_Background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:titleTextColor="@color/colorPrimary" />
+            android:layout_height="wrap_content" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -37,7 +36,6 @@
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

@@ -1,16 +1,24 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Food" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorAccent</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/md_Primary</item>
+        <item name="colorPrimaryVariant">@color/md_Primary</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/md_Background</item>
+        <item name="android:windowBackground">@color/md_Background</item>
+
+        <item name="colorAccent">@color/md_Primary</item>
+        <item name="android:textColorSecondary">@color/md_OnBackground</item>
+        <item name="android:textColorPrimary">@color/md_OnBackground</item>
+        <item name="android:textColor">#d2e5f5</item>
+        <item name="android:titleTextColor">#d2e5f5</item>
+        <item name="android:windowTitleStyle">@color/md_Background</item>
     </style>
 
     <style name="Theme.Food" parent="Base.Theme.Food" >
-        <item name="android:statusBarColor">@color/status_bar_color</item>
+        <item name="colorPrimaryDark">@color/status_bar_color</item>
     </style>
 </resources>

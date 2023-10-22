@@ -15,16 +15,15 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
             android:fitsSystemWindows="true"
             app:elevation="0dip"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarAdd"
+                android:background="@color/md_Background"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:titleTextColor="@color/colorPrimary" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -53,7 +52,6 @@
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodDescription"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +72,6 @@
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/btnAdd"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -88,15 +85,15 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@color/colorAccent"
+                    android:backgroundTint="@color/md_Tertiary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_addFood"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="#ccc0e9"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/foodLocation"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/foodDescription" />
 
                 <Button
@@ -107,12 +104,12 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorAccent"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
+                    android:backgroundTint="@color/md_Tertiary"
+                    android:textColor="#ccc0e9"
                     android:text="@string/button_addImage"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -121,8 +118,8 @@
 
                 <ImageView
                     android:id="@+id/foodImage"
-                    android:layout_width="401dp"
-                    android:layout_height="414dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
@@ -131,7 +128,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/chooseImage"
-                    app:srcCompat="@mipmap/ic_launcher" />
+                    app:srcCompat="@drawable/baseline_cookie_24"
+                    android:contentDescription="image of food" />
 
                 <Button
                     android:id="@+id/foodLocation"
@@ -141,12 +139,12 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorAccent"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
+                    android:backgroundTint="@color/md_Tertiary"
+                    android:textColor="#ccc0e9"
                     android:text="@string/button_location"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toStartOf="@+id/chooseImage"

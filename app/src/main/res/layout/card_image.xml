@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
     android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/md_Secondary"
     android:elevation="24dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -10,16 +10,15 @@
         android:id="@+id/appBarLayout3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbargallery"
+            android:background="@color/md_Background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:titleTextColor="@color/colorPrimary" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -27,7 +26,6 @@
         android:id="@+id/galleryrecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@android:color/transparent"
         android:clipToPadding="false"
         android:padding="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
