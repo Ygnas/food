@@ -10,5 +10,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
 
-    <style name="Theme.Food" parent="Base.Theme.Food" />
+    <style name="Theme.Food" parent="Base.Theme.Food" >
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+    </style>
 </resources>
