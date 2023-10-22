@@ -14,6 +14,7 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="menu_deleteFood">Delete</string>
     <string name="title_activity_food_maps">Map of All Foods </string>
+    <string name="title_activity_gallery">Gallery </string>
     <string name="title_activity_food_map">FoodMapActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>

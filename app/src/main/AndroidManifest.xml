@@ -22,7 +22,7 @@
         <activity
             android:name=".views.gallery.GalleryView"
             android:exported="false"
-            android:label="@string/title_activity_food_maps"
+            android:label="@string/title_activity_gallery"
             android:theme="@style/Theme.Food" />
         <activity
             android:name=".activities.FoodMapsActivity"
