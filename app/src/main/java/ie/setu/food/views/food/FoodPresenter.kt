@@ -70,7 +70,7 @@ class FoodPresenter(private val view: FoodView) {
     }
 
     fun cacheFood(title: String, description: String) {
-        food.title = title;
+        food.title = title
         food.description = description
     }
 

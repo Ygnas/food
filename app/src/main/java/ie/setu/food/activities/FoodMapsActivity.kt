@@ -44,12 +44,14 @@ class FoodMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener, G
     private fun configureMap() {
         map.uiSettings.isZoomControlsEnabled = true
         app.foods.findAll().forEach {
-            val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.title).position(loc)
-            map.setOnMapClickListener(this)
-            map.setOnMarkerClickListener(this)
-            map.addMarker(options)?.tag = it.id
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+            if (it.lat != 0.0 || it.lng != 0.0) {
+                val loc = LatLng(it.lat, it.lng)
+                val options = MarkerOptions().title(it.title).position(loc)
+                map.setOnMapClickListener(this)
+                map.setOnMarkerClickListener(this)
+                map.addMarker(options)?.tag = it.id
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+            }
         }
     }
 
