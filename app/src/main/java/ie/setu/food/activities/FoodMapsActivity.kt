@@ -1,6 +1,8 @@
 package ie.setu.food.activities
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -12,7 +14,7 @@ import ie.setu.food.databinding.ActivityFoodMapsBinding
 import ie.setu.food.databinding.ContentFoodMapsBinding
 import ie.setu.food.main.MainApp
 
-class FoodMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
+class FoodMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
 
     private lateinit var binding: ActivityFoodMapsBinding
     private lateinit var contentBinding: ContentFoodMapsBinding
@@ -35,17 +37,31 @@ class FoodMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
             map = it
             configureMap()
         }
+        setSupportActionBar(this.binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun configureMap() {
         map.uiSettings.isZoomControlsEnabled = true
         app.foods.findAll().forEach {
-            val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.title).position(loc)
-            map.setOnMarkerClickListener(this)
-            map.addMarker(options)?.tag = it.id
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+            if (it.lat != 0.0 || it.lng != 0.0) {
+                val loc = LatLng(it.lat, it.lng)
+                val options = MarkerOptions().title(it.title).position(loc)
+                map.setOnMapClickListener(this)
+                map.setOnMarkerClickListener(this)
+                map.addMarker(options)?.tag = it.id
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+            }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                this.onBackPressedDispatcher.onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {
@@ -79,6 +95,11 @@ class FoodMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         contentBinding.currentTitle.text = food!!.title
         contentBinding.currentDescription.text = food.description
         Picasso.get().load(food.image).into(contentBinding.currentImage)
+        contentBinding.cardView.visibility = View.VISIBLE
         return false
+    }
+
+    override fun onMapClick(p0: LatLng) {
+        contentBinding.cardView.visibility = View.GONE
     }
 }
