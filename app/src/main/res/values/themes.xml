@@ -16,6 +16,8 @@
         <item name="android:textColor">#d2e5f5</item>
         <item name="android:titleTextColor">#d2e5f5</item>
         <item name="android:windowTitleStyle">@color/md_Background</item>
+        <item name="android:textColorHint">@color/md_Secondary</item>
+
     </style>
 
     <style name="Theme.Food" parent="Base.Theme.Food" >

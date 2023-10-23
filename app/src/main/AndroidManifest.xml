@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Food"
         tools:targetApi="31">
         <activity
+            android:name=".views.account.LoginView"
+            android:exported="false" />
+        <activity
             android:name=".views.gallery.GalleryPresenter"
             android:exported="false" />
         <activity
