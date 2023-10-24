@@ -17,4 +17,9 @@
         android:icon="@drawable/baseline_map_24"
         android:title="@string/title_activity_food_maps"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/item_login"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="Acount"
+        app:showAsAction="ifRoom"/>
 </menu>
