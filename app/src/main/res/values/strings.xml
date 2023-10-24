@@ -21,4 +21,6 @@
     <string name="button_gallery">Gallery </string>
     <string name="hint_user">Username </string>
     <string name="hint_pass">Password </string>
+    <string name="login_text">Login </string>
+    <string name="incorrect_login">Invalid username/password </string>
 </resources>
