@@ -29,5 +29,9 @@ class LoginView : AppCompatActivity() {
                 binding.loginError.text = getString(R.string.incorrect_login)
             }
         }
+
+        binding.buttonRegister.setOnClickListener{
+            presenter.doRegister()
+        }
     }
 }
