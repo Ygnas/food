@@ -17,6 +17,19 @@
         android:theme="@style/Theme.Food"
         tools:targetApi="31">
         <activity
+            android:name=".views.account.AccountView"
+            android:exported="false"
+            android:label="@string/title_account"
+            android:theme="@style/Theme.Food" />
+        <activity
+            android:name=".views.account.RegisterView"
+            android:exported="false"
+            android:theme="@style/Theme.Food" />
+        <activity
+            android:name=".views.account.LoginView"
+            android:exported="false"
+            android:theme="@style/Theme.Food" />
+        <activity
             android:name=".views.gallery.GalleryPresenter"
             android:exported="false" />
         <activity

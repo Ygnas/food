@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import ie.setu.food.activities.FoodMapsActivity
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
+import ie.setu.food.views.account.LoginView
 import ie.setu.food.views.food.FoodView
 import ie.setu.food.views.gallery.GalleryView
 
@@ -16,6 +17,7 @@ class FoodListPresenter(val view: FoodListView) {
     private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var galleryIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var loginIntentLauncher: ActivityResultLauncher<Intent>
     private var position: Int = 0
 
     init {
@@ -23,6 +25,7 @@ class FoodListPresenter(val view: FoodListView) {
         registerMapCallback()
         registerRefreshCallback()
         registerGalleryCallback()
+        registerLoginCallback()
     }
 
     fun getFoods() = app.foods.findAll()
@@ -49,6 +52,11 @@ class FoodListPresenter(val view: FoodListView) {
         galleryIntentLauncher.launch(launcherIntent)
     }
 
+    fun doShowLogin() {
+        val launcherIntent = Intent(view, LoginView::class.java)
+        loginIntentLauncher.launch(launcherIntent)
+    }
+
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             view.registerForActivityResult(
@@ -68,6 +76,12 @@ class FoodListPresenter(val view: FoodListView) {
 
     private fun registerGalleryCallback() {
         galleryIntentLauncher =
+            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { }
+    }
+
+    private fun registerLoginCallback() {
+        loginIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { }
     }

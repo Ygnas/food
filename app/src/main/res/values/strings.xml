@@ -16,7 +16,14 @@
     <string name="title_activity_food_maps">Map of All Foods </string>
     <string name="title_activity_gallery">Gallery </string>
     <string name="title_activity_food_map">FoodMapActivity</string>
+    <string name="title_account">Account </string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="button_gallery">Gallery </string>
+    <string name="hint_user">Username </string>
+    <string name="hint_pass">Password </string>
+    <string name="login_text">Login </string>
+    <string name="incorrect_login">Invalid username/password </string>
+    <string name="register_error">Something was wrong </string>
+    <string name="success_login">Successfully logged in </string>
 </resources>

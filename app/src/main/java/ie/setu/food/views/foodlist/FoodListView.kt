@@ -94,6 +94,9 @@ class FoodListView : AppCompatActivity(), FoodListener {
             R.id.item_map -> {
                 presenter.doShowFoodsMap()
             }
+            R.id.item_login -> {
+                presenter.doShowLogin()
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START, false)
         return true
