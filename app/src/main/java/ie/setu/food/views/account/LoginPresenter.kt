@@ -1,12 +1,10 @@
 package ie.setu.food.views.account
 
 import android.content.Intent
-import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.UserModel
-import ie.setu.food.views.food.FoodView
 import ie.setu.food.views.foodlist.FoodListView
 
 class LoginPresenter(val view: LoginView) {

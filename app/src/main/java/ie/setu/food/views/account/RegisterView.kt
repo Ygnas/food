@@ -2,12 +2,9 @@ package ie.setu.food.views.account
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityRegisterViewBinding
 import ie.setu.food.main.MainApp
-import ie.setu.food.models.UserModel
 
 class RegisterView : AppCompatActivity() {
 
