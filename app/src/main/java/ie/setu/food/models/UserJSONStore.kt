@@ -42,6 +42,14 @@ class UserJSONStore(private val context: Context) : UserStore {
         TODO("Not yet implemented")
     }
 
+    override fun userToJSON(user: UserModel): String {
+        return gsonBuilder.toJson(user, userType)
+    }
+
+    override fun JSONToUser(user: String): UserModel {
+        return gsonBuilder.fromJson(user, userType)
+    }
+
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(users, userType)
         write(context, USER_FILE, jsonString)

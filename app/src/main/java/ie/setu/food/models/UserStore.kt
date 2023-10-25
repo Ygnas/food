@@ -6,4 +6,6 @@ interface UserStore {
     fun create(user: UserModel)
     fun update(user: UserModel)
     fun delete(user: UserModel)
+    fun userToJSON(user: UserModel): String
+    fun JSONToUser(user: String): UserModel
 }

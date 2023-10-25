@@ -2,10 +2,12 @@ package ie.setu.food.views.account
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityRegisterViewBinding
 import ie.setu.food.main.MainApp
+import ie.setu.food.models.UserModel
 
 class RegisterView : AppCompatActivity() {
 
@@ -19,16 +21,6 @@ class RegisterView : AppCompatActivity() {
         setContentView(binding.root)
         presenter = RegisterPresenter(this)
         app = application as MainApp
-
-        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-        val sharedPreferences = EncryptedSharedPreferences.create(
-            "user",
-            masterKeyAlias,
-            applicationContext,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-
 
         binding.buttonRegisterAccount.setOnClickListener{
             val user = presenter.register(

@@ -1,10 +1,13 @@
 package ie.setu.food.views.account
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityLoginViewBinding
 import ie.setu.food.main.MainApp
+
 
 class LoginView : AppCompatActivity() {
 
@@ -18,13 +21,14 @@ class LoginView : AppCompatActivity() {
         presenter = LoginPresenter(this)
         app = application as MainApp
 
+
         binding.buttonLogin.setOnClickListener{
             val user = presenter.login(binding.editTextUser.text.toString(), binding.editTextPass.text.toString())
 
             if (user != null) {
                 binding.loginError.text = ""
+//                val userJson = app.users.userToJSON(user)
                 presenter.doLogin()
-
             } else {
                 binding.loginError.text = getString(R.string.incorrect_login)
             }
