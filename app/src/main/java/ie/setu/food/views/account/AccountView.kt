@@ -3,6 +3,7 @@ package ie.setu.food.views.account
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import ie.setu.food.R
@@ -22,6 +23,10 @@ class AccountView : AppCompatActivity() {
         presenter = AccountPresenter(this)
 
         app = application as MainApp
+        setSupportActionBar(this.binding.toolbaraccount).apply {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
 
         binding.toolbaraccount.title = title
 
@@ -31,5 +36,14 @@ class AccountView : AppCompatActivity() {
         binding.buttonLogout.setOnClickListener{
             presenter.doLogout()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                presenter.doShowLogout()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

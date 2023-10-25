@@ -30,11 +30,13 @@ class LoginPresenter(val view: LoginView) {
 
     fun doLogin() {
         val launcherIntent = Intent(view, FoodListView::class.java)
+        view.finish()
         loginIntentLauncher.launch(launcherIntent)
     }
 
     fun doAccount() {
         val launcherIntent = Intent(view, AccountView::class.java)
+        view.finish()
         accountIntentLauncher.launch(launcherIntent)
     }
 
