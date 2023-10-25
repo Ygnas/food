@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.github.ajalt.timberkt.i
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityLoginViewBinding
 import ie.setu.food.main.MainApp
@@ -37,11 +38,14 @@ class LoginView : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
-        val myUser = UserModel(
-            id = sharedPreferences.getString("user", "")!!.toLong()
-        )
-        if (app.users.findById(myUser.id) != null) {
-            presenter.doLogin()
+        try {
+            val id = sharedPreferences.getString("user", "")!!.toLong()
+            val user = app.users.findById(id)
+            if (user != null) {
+                presenter.doAccount()
+            }
+        } catch (e: Exception) {
+            binding.loginError.text = ""
         }
 
 
