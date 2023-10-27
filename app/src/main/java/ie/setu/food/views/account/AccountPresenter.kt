@@ -8,7 +8,6 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.UserModel
-import ie.setu.food.views.foodlist.FoodListView
 
 class AccountPresenter(val view: AccountView) {
 
@@ -48,7 +47,8 @@ class AccountPresenter(val view: AccountView) {
     }
 
     fun doShowLogout() {
-        val launcherIntent = Intent(view, FoodListView::class.java)
+        val launcherIntent = Intent(view, LoginView::class.java)
+        view.finish()
         logoutIntentLauncher.launch(launcherIntent)
     }
 

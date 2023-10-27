@@ -33,6 +33,7 @@ class FoodMemStore: FoodStore {
             foundFood.title = food.title
             foundFood.description = food.description
             foundFood.image = food.image
+            foundFood.date = food.date
             foundFood.lat = food.lat
             foundFood.lng = food.lng
             foundFood.zoom = food.zoom

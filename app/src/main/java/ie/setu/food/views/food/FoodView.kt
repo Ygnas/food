@@ -1,21 +1,28 @@
 package ie.setu.food.views.food
 
+import android.icu.text.DateFormat
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodBinding
 import ie.setu.food.models.FoodModel
 import timber.log.Timber
+import java.util.Date
 
 class FoodView : AppCompatActivity() {
 
     private lateinit var binding: ActivityFoodBinding
     private lateinit var presenter: FoodPresenter
+    private val dateFormat: DateFormat = SimpleDateFormat.getDateInstance()
     var food = FoodModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,12 +37,12 @@ class FoodView : AppCompatActivity() {
         presenter = FoodPresenter(this)
 
         binding.chooseImage.setOnClickListener {
-            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString())
+            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString(), binding.editTextDate.text.toString())
             presenter.doSelectImage()
         }
 
         binding.foodLocation.setOnClickListener {
-            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString())
+            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString(), binding.editTextDate.text.toString())
             presenter.doSetLocation()
         }
 
@@ -46,10 +53,35 @@ class FoodView : AppCompatActivity() {
             } else {
                 presenter.doAddOrSave(
                     binding.foodTitle.text.toString(),
-                    binding.foodDescription.text.toString()
+                    binding.foodDescription.text.toString(),
+                    binding.editTextDate.text.toString()
                 )
             }
         }
+
+        binding.editTextDate.setOnClickListener {
+//            showDate()
+            MaterialAlertDialogBuilder(this.applicationContext)
+                .setTitle("resources.getString(R.string.title)")
+                .setMessage("resources.getString(R.string.supporting_text)")
+                .show()
+        }
+    }
+
+    private fun showDate() {
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .build()
+
+        datePicker.addOnPositiveButtonClickListener { date ->
+            val selectedDate = Date(date)
+            val formattedDate = SimpleDateFormat.getDateInstance().format(selectedDate)
+
+            binding.editTextDate.setText(formattedDate)
+        }
+        datePicker.show(supportFragmentManager, "tag")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -74,6 +106,7 @@ class FoodView : AppCompatActivity() {
     fun showFood(food: FoodModel) {
         binding.foodTitle.setText(food.title)
         binding.foodDescription.setText(food.description)
+        binding.editTextDate.setText(food.date)
         binding.btnAdd.setText(R.string.save_food)
         Picasso.get()
             .load(food.image)
