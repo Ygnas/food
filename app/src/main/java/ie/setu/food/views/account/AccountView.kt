@@ -1,12 +1,8 @@
 package ie.setu.food.views.account
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
-import ie.setu.food.R
 import ie.setu.food.databinding.ActivityAccountViewBinding
 import ie.setu.food.main.MainApp
 

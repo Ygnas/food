@@ -30,6 +30,10 @@ class FoodView : AppCompatActivity() {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
 
+        if (binding.editTextDate.text.isEmpty()) {
+            binding.editTextDate.setText(SimpleDateFormat.getDateInstance().format(MaterialDatePicker.todayInUtcMilliseconds()))
+        }
+
         presenter = FoodPresenter(this)
 
         binding.chooseImage.setOnClickListener {
