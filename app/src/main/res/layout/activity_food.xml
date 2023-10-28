@@ -42,41 +42,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/foodTitle"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/material_foodTitle"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/hint_foodTitle"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/foodDescription"
-                    app:layout_constraintEnd_toStartOf="@+id/editTextDate"
+                    app:boxBackgroundMode="outline"
+                    app:layout_constraintBottom_toTopOf="@+id/material_foodDescription"
+                    app:layout_constraintEnd_toStartOf="@+id/material_editTextDate"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
 
-                <EditText
-                    android:id="@+id/foodDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    <EditText
+                        android:id="@+id/foodTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:autofillHints="hint"
+                        android:inputType="text"
+                        android:maxLength="25"
+                        android:maxLines="1"
+                        android:padding="8dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/material_editTextDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/hint_date"
+                    app:boxBackgroundMode="outline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/material_foodTitle"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/editTextDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:focusable="false"
+                        android:inputType="date" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/material_foodDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/hint_foodDescription"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
+                    app:boxBackgroundMode="outline"
                     app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/foodTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/material_foodTitle">
+
+                    <EditText
+                        android:id="@+id/foodDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:inputType="text"
+                        android:padding="8dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/btnAdd"
@@ -94,7 +122,7 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/foodDescription" />
+                    app:layout_constraintTop_toBottomOf="@+id/material_foodDescription" />
 
                 <Button
                     android:id="@+id/chooseImage"
@@ -151,22 +179,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btnAdd"
                     app:layout_constraintVertical_bias="0.428" />
-
-                <EditText
-                    android:id="@+id/editTextDate"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="@string/hint_date"
-                    android:inputType="date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/foodTitle"
-                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

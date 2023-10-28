@@ -1,15 +1,12 @@
 package ie.setu.food.views.food
 
-import android.icu.text.DateFormat
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import ie.setu.food.R
@@ -22,7 +19,6 @@ class FoodView : AppCompatActivity() {
 
     private lateinit var binding: ActivityFoodBinding
     private lateinit var presenter: FoodPresenter
-    private val dateFormat: DateFormat = SimpleDateFormat.getDateInstance()
     var food = FoodModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,11 +56,7 @@ class FoodView : AppCompatActivity() {
         }
 
         binding.editTextDate.setOnClickListener {
-//            showDate()
-            MaterialAlertDialogBuilder(this.applicationContext)
-                .setTitle("resources.getString(R.string.title)")
-                .setMessage("resources.getString(R.string.supporting_text)")
-                .show()
+            showDate()
         }
     }
 
