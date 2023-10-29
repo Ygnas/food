@@ -103,7 +103,7 @@
                     android:hint="@string/hint_foodDescription"
                     app:boxBackgroundMode="outline"
                     app:layout_constraintBottom_toTopOf="@+id/btnAdd"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/spinner"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/material_foodTitle">
 
@@ -189,6 +189,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btnAdd"
                     app:layout_constraintVertical_bias="0.428" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:popupBackground="@color/md_Background"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/material_foodDescription"
+                    app:layout_constraintTop_toBottomOf="@+id/material_editTextDate" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

@@ -5,6 +5,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
@@ -12,6 +14,7 @@ import com.squareup.picasso.Picasso
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodBinding
 import ie.setu.food.models.FoodModel
+import ie.setu.food.models.FoodType
 import timber.log.Timber
 import java.util.Date
 
@@ -24,7 +27,6 @@ class FoodView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
@@ -33,16 +35,20 @@ class FoodView : AppCompatActivity() {
         if (binding.editTextDate.text.isEmpty()) {
             binding.editTextDate.setText(SimpleDateFormat.getDateInstance().format(MaterialDatePicker.todayInUtcMilliseconds()))
         }
+        val spinner = binding.spinner
+        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, FoodType.values())
 
         presenter = FoodPresenter(this)
 
         binding.chooseImage.setOnClickListener {
-            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString(), binding.editTextDate.text.toString())
+            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString(),
+                binding.editTextDate.text.toString(), binding.spinner.selectedItem as FoodType)
             presenter.doSelectImage()
         }
 
         binding.foodLocation.setOnClickListener {
-            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString(), binding.editTextDate.text.toString())
+            presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString(),
+                binding.editTextDate.text.toString(), binding.spinner.selectedItem as FoodType)
             presenter.doSetLocation()
         }
 
@@ -54,7 +60,8 @@ class FoodView : AppCompatActivity() {
                 presenter.doAddOrSave(
                     binding.foodTitle.text.toString(),
                     binding.foodDescription.text.toString(),
-                    binding.editTextDate.text.toString()
+                    binding.editTextDate.text.toString(),
+                    binding.spinner.selectedItem as FoodType
                 )
             }
         }
@@ -104,6 +111,7 @@ class FoodView : AppCompatActivity() {
         binding.foodDescription.setText(food.description)
         binding.editTextDate.setText(food.date)
         binding.btnAdd.setText(R.string.save_food)
+        binding.spinner.setSelection(food.foodType.ordinal)
         Picasso.get()
             .load(food.image)
             .into(binding.foodImage)

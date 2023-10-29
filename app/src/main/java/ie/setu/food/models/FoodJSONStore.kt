@@ -53,6 +53,7 @@ class FoodJSONStore(private val context: Context) : FoodStore {
             foundFood.lat = food.lat
             foundFood.lng = food.lng
             foundFood.zoom = food.zoom
+            foundFood.foodType = food.foodType
         }
         serialize()
     }

@@ -37,6 +37,7 @@ class FoodMemStore: FoodStore {
             foundFood.lat = food.lat
             foundFood.lng = food.lng
             foundFood.zoom = food.zoom
+            foundFood.foodType = food.foodType
             logAll()
         }
     }

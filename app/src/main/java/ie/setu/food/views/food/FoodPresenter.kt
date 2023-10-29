@@ -6,11 +6,13 @@ import android.icu.text.SimpleDateFormat
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat.FocusDirection
 import com.google.android.material.datepicker.MaterialDatePicker
 import ie.setu.food.databinding.ActivityFoodBinding
 import ie.setu.food.helpers.showImagePicker
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
+import ie.setu.food.models.FoodType
 import ie.setu.food.models.Location
 import ie.setu.food.views.editlocation.EditLocationView
 import timber.log.Timber
@@ -34,10 +36,11 @@ class FoodPresenter(private val view: FoodView) {
         registerImagePickerCallback()
         registerMapCallback()
     }
-    fun doAddOrSave(title: String, description: String, date: String) {
+    fun doAddOrSave(title: String, description: String, date: String, foodType: FoodType) {
         food.title = title
         food.description = description
         food.date = date
+        food.foodType = foodType
         if (edit) {
             app.foods.update(food)
         } else {
@@ -73,10 +76,11 @@ class FoodPresenter(private val view: FoodView) {
         mapIntentLauncher.launch(launcherIntent)
     }
 
-    fun cacheFood(title: String, description: String, date: String) {
+    fun cacheFood(title: String, description: String, date: String, foodType: FoodType) {
         food.title = title
         food.description = description
         food.date = date
+        food.foodType = foodType
     }
 
     private fun registerImagePickerCallback() {
