@@ -8,20 +8,29 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.UserModel
+import ie.setu.food.views.foodlist.FoodListView
 
 class AccountPresenter(val view: AccountView) {
 
     var app: MainApp = view.application as MainApp
     private lateinit var logoutIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mainIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var sharedPreferences: SharedPreferences
 
     init {
         shared()
         registerLoginCallback()
+        registerMainCallback()
     }
 
     private fun registerLoginCallback() {
         logoutIntentLauncher =
+            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { }
+    }
+
+    private fun registerMainCallback() {
+        mainIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { }
     }
@@ -50,6 +59,11 @@ class AccountPresenter(val view: AccountView) {
         val launcherIntent = Intent(view, LoginView::class.java)
         view.finish()
         logoutIntentLauncher.launch(launcherIntent)
+    }
+
+    fun doShowMain() {
+        val launcherIntent = Intent(view, FoodListView::class.java)
+        mainIntentLauncher.launch(launcherIntent)
     }
 
     private fun shared() {

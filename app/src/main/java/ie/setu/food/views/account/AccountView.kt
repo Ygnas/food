@@ -37,7 +37,7 @@ class AccountView : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                presenter.doShowLogout()
+                presenter.doShowMain()
             }
         }
         return super.onOptionsItemSelected(item)
