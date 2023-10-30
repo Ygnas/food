@@ -11,6 +11,8 @@ data class FoodModel(var id: Long = 0,
                           var title: String = "",
                           var description: String = "",
                           var image: Uri = Uri.EMPTY,
+                          var date: String = "",
+                          var foodType: FoodType = FoodType.BREAKFAST,
                           var lat : Double = 0.0,
                           var lng: Double = 0.0,
                           var zoom: Float = 0f) : Parcelable
@@ -19,3 +21,10 @@ data class FoodModel(var id: Long = 0,
 data class Location(var lat: Double = 0.0,
                     var lng: Double = 0.0,
                     var zoom: Float = 0f) : Parcelable
+
+enum class FoodType {
+    BREAKFAST,
+    LUNCH,
+    DINNER,
+    SNACK
+}

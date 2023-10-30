@@ -14,15 +14,23 @@ class AccountPresenter(val view: AccountView) {
 
     var app: MainApp = view.application as MainApp
     private lateinit var logoutIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mainIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var sharedPreferences: SharedPreferences
 
     init {
         shared()
         registerLoginCallback()
+        registerMainCallback()
     }
 
     private fun registerLoginCallback() {
         logoutIntentLauncher =
+            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { }
+    }
+
+    private fun registerMainCallback() {
+        mainIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { }
     }
@@ -48,8 +56,14 @@ class AccountPresenter(val view: AccountView) {
     }
 
     fun doShowLogout() {
-        val launcherIntent = Intent(view, FoodListView::class.java)
+        val launcherIntent = Intent(view, LoginView::class.java)
+        view.finish()
         logoutIntentLauncher.launch(launcherIntent)
+    }
+
+    fun doShowMain() {
+        val launcherIntent = Intent(view, FoodListView::class.java)
+        mainIntentLauncher.launch(launcherIntent)
     }
 
     private fun shared() {
