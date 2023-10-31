@@ -41,6 +41,11 @@ android {
 }
 
 dependencies {
+    implementation("androidx.camera:camera-camera2:1.3.0")
+    implementation("androidx.camera:camera-lifecycle:1.3.0")
+    implementation("androidx.camera:camera-core:1.3.0")
+    implementation("androidx.camera:camera-view:1.3.0")
+    implementation("androidx.camera:camera-extensions:1.3.0")
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("androidx.core:core-ktx:1.12.0")
