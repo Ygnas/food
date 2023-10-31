@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/md_Background" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -91,6 +92,7 @@
                         android:textAlignment="viewStart"
                         android:textColor="@color/md_OnBackground"
                         android:textSize="14sp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -137,9 +139,9 @@
                 <Button
                     android:id="@+id/chooseImage"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:backgroundTint="@color/md_Secondary"
@@ -150,7 +152,7 @@
                     android:textColor="@color/md_OnBackground"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodImage"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/button_camera"
                     app:layout_constraintStart_toEndOf="@+id/foodLocation"
                     app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
@@ -170,12 +172,10 @@
 
                 <Button
                     android:id="@+id/foodLocation"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
                     android:backgroundTint="@color/md_Secondary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
@@ -185,10 +185,8 @@
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toStartOf="@+id/chooseImage"
-                    app:layout_constraintHorizontal_bias="0.421"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnAdd"
-                    app:layout_constraintVertical_bias="0.428" />
+                    app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
                 <Spinner
                     android:id="@+id/spinner"
@@ -202,6 +200,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/material_foodDescription"
                     app:layout_constraintTop_toBottomOf="@+id/material_editTextDate" />
+
+                <Button
+                    android:id="@+id/button_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="16sp"
+                    app:icon="@drawable/baseline_photo_camera_24"
+                    app:iconSize="28dp"
+                    app:layout_constraintBottom_toTopOf="@+id/foodImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chooseImage"
+                    app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

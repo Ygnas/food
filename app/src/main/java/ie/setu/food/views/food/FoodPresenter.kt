@@ -14,6 +14,8 @@ import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
 import ie.setu.food.models.FoodType
 import ie.setu.food.models.Location
+import ie.setu.food.views.account.LoginView
+import ie.setu.food.views.camera.CameraView
 import ie.setu.food.views.editlocation.EditLocationView
 import timber.log.Timber
 import java.util.Date
@@ -25,6 +27,7 @@ class FoodPresenter(private val view: FoodView) {
     var binding: ActivityFoodBinding = ActivityFoodBinding.inflate(view.layoutInflater)
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var cameraIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
 
     init {
@@ -35,6 +38,7 @@ class FoodPresenter(private val view: FoodView) {
         }
         registerImagePickerCallback()
         registerMapCallback()
+        registerCameraCallback()
     }
     fun doAddOrSave(title: String, description: String, date: String, foodType: FoodType) {
         food.title = title
@@ -83,6 +87,11 @@ class FoodPresenter(private val view: FoodView) {
         food.foodType = foodType
     }
 
+    fun showCamera() {
+        val launcherIntent = Intent(view, CameraView::class.java)
+        cameraIntentLauncher.launch(launcherIntent)
+    }
+
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -120,5 +129,11 @@ class FoodPresenter(private val view: FoodView) {
                     else -> {}
                 }
             }
+    }
+
+    private fun registerCameraCallback() {
+        cameraIntentLauncher =
+            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { }
     }
 }
