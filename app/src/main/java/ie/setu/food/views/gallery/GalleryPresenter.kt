@@ -4,11 +4,7 @@ import ie.setu.food.main.MainApp
 
 class GalleryPresenter(val view: GalleryView) {
 
-    var app: MainApp
-
-    init {
-        app = view.application as MainApp
-    }
+    var app: MainApp = view.application as MainApp
 
     fun getImages() = app.foods.findAll()
 
