@@ -39,6 +39,18 @@ class FoodListView : AppCompatActivity(), FoodListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         loadFoods()
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchFoods(query!!)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchFoods(newText!!)
+                return true
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,6 +121,13 @@ class FoodListView : AppCompatActivity(), FoodListener {
 
     private fun loadFoods() {
         binding.recyclerView.adapter = FoodAdapter(presenter.getFoods(), this)
+        onRefresh()
+    }
+
+    private fun searchFoods(query: String) {
+        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
+        foodAdapter.search(query)
+        binding.recyclerView.adapter = foodAdapter
         onRefresh()
     }
 
