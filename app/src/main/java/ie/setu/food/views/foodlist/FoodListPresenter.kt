@@ -2,14 +2,18 @@ package ie.setu.food.views.foodlist
 
 import android.app.Activity
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.material.datepicker.MaterialDatePicker
 import ie.setu.food.activities.FoodMapsActivity
+import ie.setu.food.databinding.ActivityFoodListBinding
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
 import ie.setu.food.views.account.LoginView
 import ie.setu.food.views.food.FoodView
 import ie.setu.food.views.gallery.GalleryView
+import java.util.Date
 
 class FoodListPresenter(val view: FoodListView) {
 
@@ -18,6 +22,7 @@ class FoodListPresenter(val view: FoodListView) {
     private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var galleryIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var loginIntentLauncher: ActivityResultLauncher<Intent>
+    var binding: ActivityFoodListBinding = ActivityFoodListBinding.inflate(view.layoutInflater)
     private var position: Int = 0
 
     init {
@@ -55,6 +60,21 @@ class FoodListPresenter(val view: FoodListView) {
     fun doShowLogin() {
         val launcherIntent = Intent(view, LoginView::class.java)
         loginIntentLauncher.launch(launcherIntent)
+    }
+
+    fun filterDate() {
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Filter By Date")
+                .build()
+
+        datePicker.addOnPositiveButtonClickListener { date ->
+            val selectedDate = Date(date)
+            val formattedDate = SimpleDateFormat.getDateInstance().format(selectedDate)
+            view.filterFoodsByDate(formattedDate)
+            view.setChip(formattedDate)
+        }
+        datePicker.show(view.supportFragmentManager, "")
     }
 
     private fun registerRefreshCallback() {

@@ -33,8 +33,16 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
             originalFoods
         } else {
             originalFoods.filter {
-                it.title.contains(query, ignoreCase = true) || it.description.contains(query, ignoreCase = true)
+                it.title.contains(query, ignoreCase = true) || it.description.contains(query, ignoreCase = true) || it.foodType.toString().contains(query, ignoreCase = true)
             }
+        }
+    }
+
+    fun filterByDate(date: String?) {
+        foods = if (date!!.isNotBlank()) {
+            originalFoods.filter { it.date == date }
+        } else {
+            originalFoods
         }
     }
 
