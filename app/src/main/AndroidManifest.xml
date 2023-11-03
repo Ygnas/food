@@ -5,6 +5,13 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
 
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <application
         android:name=".main.MainApp"
         android:allowBackup="true"
@@ -16,6 +23,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Food"
         tools:targetApi="31">
+        <activity
+            android:name=".views.camera.CameraPresenter"
+            android:exported="false" />
+        <activity
+            android:name=".views.camera.CameraView"
+            android:exported="false" />
         <activity
             android:name=".views.account.AccountView"
             android:exported="false"

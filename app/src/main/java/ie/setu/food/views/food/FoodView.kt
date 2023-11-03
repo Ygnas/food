@@ -69,6 +69,10 @@ class FoodView : AppCompatActivity() {
         binding.editTextDate.setOnClickListener {
             showDate()
         }
+
+        binding.buttonCamera.setOnClickListener {
+            presenter.showCamera()
+        }
     }
 
     private fun showDate() {
