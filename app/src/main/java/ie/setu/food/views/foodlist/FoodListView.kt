@@ -1,6 +1,7 @@
 package ie.setu.food.views.foodlist
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodListBinding
@@ -51,6 +53,10 @@ class FoodListView : AppCompatActivity(), FoodListener {
             }
 
         })
+
+        binding.imageButton.setOnClickListener {
+            presenter.filterDate()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -127,6 +133,13 @@ class FoodListView : AppCompatActivity(), FoodListener {
     private fun searchFoods(query: String) {
         val foodAdapter = FoodAdapter(presenter.getFoods(),this)
         foodAdapter.search(query)
+        binding.recyclerView.adapter = foodAdapter
+        onRefresh()
+    }
+
+    fun filterFoodsByDate(query: String) {
+        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
+        foodAdapter.filterByDate(query)
         binding.recyclerView.adapter = foodAdapter
         onRefresh()
     }
