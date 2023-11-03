@@ -54,6 +54,8 @@ class FoodListView : AppCompatActivity(), FoodListener {
         })
 
         binding.imageButton.setOnClickListener {
+            binding.searchView.setQuery("", false)
+            binding.searchView.isIconified = true
             presenter.filterDate()
         }
 
