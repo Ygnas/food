@@ -1,15 +1,14 @@
 package ie.setu.food.views.foodlist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityFoodListBinding
@@ -56,6 +55,11 @@ class FoodListView : AppCompatActivity(), FoodListener {
 
         binding.imageButton.setOnClickListener {
             presenter.filterDate()
+        }
+
+        binding.filterChip.setOnClickListener {
+            binding.filterChip.visibility = View.GONE
+            filterFoodsByDate("")
         }
     }
 
@@ -142,6 +146,11 @@ class FoodListView : AppCompatActivity(), FoodListener {
         foodAdapter.filterByDate(query)
         binding.recyclerView.adapter = foodAdapter
         onRefresh()
+    }
+
+    fun setChip(text: String) {
+        binding.filterChip.text = "Filtering By Date: $text"
+        binding.filterChip.visibility = View.VISIBLE
     }
 
     fun onRefresh() {

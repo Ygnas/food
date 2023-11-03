@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ie.setu.food.databinding.CardFoodBinding
 import ie.setu.food.models.FoodModel
-import java.util.Date
 
 
 interface FoodListener {
@@ -39,8 +38,12 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
         }
     }
 
-    fun filterByDate(date: String) {
-        foods = originalFoods.filter { it.date == date }
+    fun filterByDate(date: String?) {
+        foods = if (date!!.isNotBlank()) {
+            originalFoods.filter { it.date == date }
+        } else {
+            originalFoods
+        }
     }
 
     class MainHolder(private val binding: CardFoodBinding) :
