@@ -1,6 +1,8 @@
 package ie.setu.food.views.camera
 
+import android.app.Activity.RESULT_OK
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.provider.MediaStore
@@ -8,14 +10,17 @@ import android.widget.Toast
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.core.content.ContextCompat
+import ie.setu.food.databinding.ActivityCameraViewBinding
 import ie.setu.food.main.MainApp
 import timber.log.Timber
 import java.util.Locale
+
 
 class CameraPresenter(val view: CameraView) {
 
     var app: MainApp = view.application as MainApp
     var imageCapture: ImageCapture? = null
+    var binding: ActivityCameraViewBinding = ActivityCameraViewBinding.inflate(view.layoutInflater)
 
     fun takePhoto() {
         val imageCapture = imageCapture ?: return
@@ -47,6 +52,10 @@ class CameraPresenter(val view: CameraView) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(app.baseContext, msg, Toast.LENGTH_SHORT).show()
                     Timber.i(msg)
+                    view.setResult(RESULT_OK, Intent().apply {
+                        putExtra("imagePath", output.savedUri)
+                    })
+                    view.finish()
                 }
             }
         )

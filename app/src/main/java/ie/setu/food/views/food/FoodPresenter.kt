@@ -2,23 +2,19 @@ package ie.setu.food.views.food
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat.FocusDirection
-import com.google.android.material.datepicker.MaterialDatePicker
 import ie.setu.food.databinding.ActivityFoodBinding
 import ie.setu.food.helpers.showImagePicker
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
 import ie.setu.food.models.FoodType
 import ie.setu.food.models.Location
-import ie.setu.food.views.account.LoginView
 import ie.setu.food.views.camera.CameraView
 import ie.setu.food.views.editlocation.EditLocationView
 import timber.log.Timber
-import java.util.Date
 
 class FoodPresenter(private val view: FoodView) {
 
@@ -132,8 +128,15 @@ class FoodPresenter(private val view: FoodView) {
     }
 
     private fun registerCameraCallback() {
-        cameraIntentLauncher =
-            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { }
+        cameraIntentLauncher = view.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data: Intent? = result.data
+                val imagePath = data?.getParcelableExtra<Uri>("imagePath")
+                if (imagePath != null) {
+                    food.image = imagePath
+                    view.updateImage(food.image)
+                }
+            }
+        }
     }
 }

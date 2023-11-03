@@ -80,7 +80,7 @@ class CameraView : AppCompatActivity() {
         { permissions ->
             var permissionGranted = true
             permissions.entries.forEach {
-                if (it.key in CameraView.REQUIRED_PERMISSIONS && !it.value)
+                if (it.key in REQUIRED_PERMISSIONS && !it.value)
                     permissionGranted = false
             }
             if (!permissionGranted) {
