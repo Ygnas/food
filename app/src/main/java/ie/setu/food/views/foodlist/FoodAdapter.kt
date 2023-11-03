@@ -14,7 +14,7 @@ interface FoodListener {
 
 class FoodAdapter constructor(private var foods: List<FoodModel>, private val listener: FoodListener) :
     RecyclerView.Adapter<FoodAdapter.MainHolder>() {
-
+    private var originalFoods: List<FoodModel> = foods
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardFoodBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,6 +27,16 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
     }
 
     override fun getItemCount(): Int = foods.size
+
+    fun search(query: String) {
+        foods = if (query.isEmpty()) {
+            originalFoods
+        } else {
+            originalFoods.filter {
+                it.title.contains(query, ignoreCase = true) || it.description.contains(query, ignoreCase = true)
+            }
+        }
+    }
 
     class MainHolder(private val binding: CardFoodBinding) :
         RecyclerView.ViewHolder(binding.root) {
