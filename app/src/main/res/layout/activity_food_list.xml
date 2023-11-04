@@ -19,18 +19,17 @@
             android:id="@+id/appBarLayout5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:elevation="0dip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/md_Background" />
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -57,7 +56,8 @@
             android:id="@+id/imageButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#00FFFFFF"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/description_filter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout5"
             app:srcCompat="@drawable/baseline_filter_list_24" />
@@ -79,7 +79,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/md_Background"
         app:menu="@menu/navigation_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

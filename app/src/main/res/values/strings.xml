@@ -13,6 +13,7 @@
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="menu_deleteFood">Delete</string>
+    <string name="menu_account">Account</string>
     <string name="title_activity_food_maps">Map of All Foods </string>
     <string name="title_activity_gallery">Gallery </string>
     <string name="title_activity_food_map">FoodMapActivity</string>
@@ -23,6 +24,7 @@
     <string name="hint_user">Username </string>
     <string name="hint_pass">Password </string>
     <string name="login_text">Login </string>
+    <string name="logout_text">Logout </string>
     <string name="incorrect_login">Invalid username/password </string>
     <string name="register_error">Something was wrong </string>
     <string name="register_error_password">Password do not match</string>
@@ -32,4 +34,5 @@
     <string name="hint_date">Date</string>
     <string name="register_button">Register</string>
     <string name="take_photo">Take Photo</string>
+    <string name="description_filter">Filtering icon</string>
 </resources>

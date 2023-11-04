@@ -20,14 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:elevation="0dip"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            app:elevation="0dip">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbarAdd"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/md_Background" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -64,8 +62,7 @@
                         android:inputType="text"
                         android:maxLength="25"
                         android:maxLines="1"
-                        android:padding="8dp"
-                        android:textColor="@color/md_OnBackground" />
+                        android:padding="8dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -90,7 +87,6 @@
                         android:focusable="false"
                         android:inputType="date"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/md_OnBackground"
                         android:textSize="14sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -114,8 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:inputType="text"
-                        android:padding="8dp"
-                        android:textColor="@color/md_OnBackground" />
+                        android:padding="8dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
@@ -125,12 +120,10 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/md_Secondary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_addFood"
-                    android:textColor="@color/md_OnBackground"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -144,12 +137,10 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:backgroundTint="@color/md_Secondary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_addImage"
-                    android:textColor="@color/md_OnBackground"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toStartOf="@+id/button_camera"
@@ -176,12 +167,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/md_Secondary"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_location"
-                    android:textColor="@color/md_OnBackground"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toStartOf="@+id/chooseImage"
@@ -195,7 +184,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:popupBackground="@color/md_Background"
+                    android:paddingTop="8dp"
                     android:spinnerMode="dropdown"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/material_foodDescription"

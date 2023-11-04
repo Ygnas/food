@@ -35,29 +35,24 @@
         <activity
             android:name=".views.account.AccountView"
             android:exported="false"
-            android:label="@string/title_account"
-            android:theme="@style/Theme.Food" />
+            android:label="@string/title_account" />
         <activity
             android:name=".views.account.RegisterView"
-            android:exported="false"
-            android:theme="@style/Theme.Food" />
+            android:exported="false" />
         <activity
             android:name=".views.account.LoginView"
-            android:exported="false"
-            android:theme="@style/Theme.Food" />
+            android:exported="false" />
         <activity
             android:name=".views.gallery.GalleryPresenter"
             android:exported="false" />
         <activity
             android:name=".views.gallery.GalleryView"
             android:exported="false"
-            android:label="@string/title_activity_gallery"
-            android:theme="@style/Theme.Food" />
+            android:label="@string/title_activity_gallery" />
         <activity
             android:name=".activities.FoodMapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_food_maps"
-            android:theme="@style/Theme.Food">
+            android:label="@string/title_activity_food_maps" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -73,7 +68,8 @@
             android:label="@string/title_activity_map" />
         <activity
             android:name=".views.foodlist.FoodListView"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Food">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
