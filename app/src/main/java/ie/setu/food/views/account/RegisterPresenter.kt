@@ -19,11 +19,11 @@ class RegisterPresenter(val view: RegisterView) {
         registerLoginCallback()
     }
 
-    fun register(username: String, password: String, password2: String): UserModel? {
+    fun register(username: String, password: String): UserModel? {
         val userList = app.users.findAll()
         val user = userList.find { it.username == username }
 
-        return if (user == null && password == password2 && username.isNotEmpty() && password.isNotEmpty()) {
+        return if (user == null) {
             val newUser = UserModel(
                 username = username,
                 password = password

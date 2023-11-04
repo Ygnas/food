@@ -20,10 +20,25 @@ class RegisterView : AppCompatActivity() {
         app = application as MainApp
 
         binding.buttonRegisterAccount.setOnClickListener{
+            val username = binding.editTextUser.text.toString()
+            val password = binding.editTextPass.text.toString()
+            val passwordrepeat = binding.editTextRepeatPass.text.toString()
+            if (username.isEmpty() && password.isEmpty()) {
+                binding.loginError.text = getString(R.string.register_error_empty)
+                return@setOnClickListener
+            }
+            if (password.length < 5) {
+                binding.loginError.text = getString(R.string.register_error_short)
+                return@setOnClickListener
+            }
+            if (password != passwordrepeat) {
+                binding.loginError.text = getString(R.string.register_error_password)
+                return@setOnClickListener
+            }
+//            && password == password2 && username.isNotEmpty() && password.isNotEmpty()
             val user = presenter.register(
-                binding.editTextUser.text.toString(),
-                binding.editTextPass.text.toString(),
-                binding.editTextRepeatPass.text.toString())
+                username,
+                password)
 
             if (user != null) {
                 presenter.doLogin()

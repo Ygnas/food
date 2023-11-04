@@ -6,11 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.github.ajalt.timberkt.i
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityLoginViewBinding
 import ie.setu.food.main.MainApp
-import ie.setu.food.models.UserModel
 
 
 class LoginView : AppCompatActivity() {
