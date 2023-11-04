@@ -1,7 +1,6 @@
 package ie.setu.food.models
 
 import android.content.Context
-import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import ie.setu.food.helpers.exists
 import ie.setu.food.helpers.read
@@ -15,7 +14,7 @@ val userType: Type = object : TypeToken<ArrayList<UserModel>>() {}.type
 
 class UserJSONStore(private val context: Context) : UserStore {
 
-    var users = mutableListOf<UserModel>()
+    private var users = mutableListOf<UserModel>()
     init {
         if (exists(context, USER_FILE)) {
             deserialize()

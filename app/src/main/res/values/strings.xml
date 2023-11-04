@@ -25,6 +25,9 @@
     <string name="login_text">Login </string>
     <string name="incorrect_login">Invalid username/password </string>
     <string name="register_error">Something was wrong </string>
+    <string name="register_error_password">Password do not match</string>
+    <string name="register_error_empty">Username or password cannot be empty</string>
+    <string name="register_error_short">Password must be 5 chars or longer</string>
     <string name="success_login">Successfully logged in </string>
     <string name="hint_date">Date</string>
     <string name="register_button">Register</string>
