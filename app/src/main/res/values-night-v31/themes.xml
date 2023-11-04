@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Theme.Food" parent="AppTheme">
-        <item name="android:windowSplashScreenBackground">@color/md_theme_light_background</item>
+        <item name="android:windowSplashScreenBackground">@color/md_theme_dark_background</item>
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/baseline_cookie_24</item>
     </style>
 </resources>

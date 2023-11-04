@@ -14,10 +14,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbaraccount"
             android:layout_width="match_parent"
-            android:background="@color/md_Background"
             android:layout_height="wrap_content" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -26,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
-        android:text="Username"
+        android:text="@string/hint_user"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:backgroundTint="@color/md_Secondary"
-        android:textColor="@color/md_OnBackground"
-        android:text="Logout"
+        android:text="@string/logout_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_username" />

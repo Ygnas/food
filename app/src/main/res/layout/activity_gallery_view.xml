@@ -14,9 +14,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbargallery"
-            android:background="@color/md_Background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
