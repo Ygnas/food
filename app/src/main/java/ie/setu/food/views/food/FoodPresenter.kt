@@ -41,6 +41,11 @@ class FoodPresenter(private val view: FoodView) {
         food.description = description
         food.date = date
         food.foodType = foodType
+        if (view.loc.latitude != 0.0 && food.lat == 0.0) {
+            food.lat = view.loc.latitude
+            food.lng = view.loc.longitude
+            food.zoom = 16f
+        }
         if (edit) {
             app.foods.update(food)
         } else {
@@ -64,8 +69,12 @@ class FoodPresenter(private val view: FoodView) {
         showImagePicker(imageIntentLauncher, view)
     }
 
-    fun doSetLocation() {
-        val location = Location(52.245696, -7.139102, 15f)
+    fun doSetLocation(lat : Double, lng : Double) {
+        val location: Location = if (lat == 0.0 && lng == 0.0) {
+            Location(52.245696, -7.139102, 15f)
+        } else {
+            Location(lat, lng, 15f)
+        }
         if (food.zoom != 0f) {
             location.lat = food.lat
             location.lng = food.lng

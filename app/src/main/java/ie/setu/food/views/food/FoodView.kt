@@ -1,13 +1,19 @@
 package ie.setu.food.views.food
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.Spinner
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
@@ -22,7 +28,9 @@ class FoodView : AppCompatActivity() {
 
     private lateinit var binding: ActivityFoodBinding
     private lateinit var presenter: FoodPresenter
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     var food = FoodModel()
+    var loc = Location("food")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +39,7 @@ class FoodView : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (binding.editTextDate.text.isEmpty()) {
             binding.editTextDate.setText(SimpleDateFormat.getDateInstance().format(MaterialDatePicker.todayInUtcMilliseconds()))
@@ -49,7 +58,7 @@ class FoodView : AppCompatActivity() {
         binding.foodLocation.setOnClickListener {
             presenter.cacheFood(binding.foodTitle.text.toString(), binding.foodDescription.text.toString(),
                 binding.editTextDate.text.toString(), binding.spinner.selectedItem as FoodType)
-            presenter.doSetLocation()
+            presenter.doSetLocation(loc.latitude, loc.longitude)
         }
 
         binding.btnAdd.setOnClickListener {
@@ -73,6 +82,8 @@ class FoodView : AppCompatActivity() {
         binding.buttonCamera.setOnClickListener {
             presenter.showCamera()
         }
+        requestLocationPermissions()
+        setLocation()
     }
 
     private fun showDate() {
@@ -89,6 +100,41 @@ class FoodView : AppCompatActivity() {
             binding.editTextDate.setText(formattedDate)
         }
         datePicker.show(supportFragmentManager, "tag")
+    }
+
+    private fun requestLocationPermissions() {
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {}
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {}
+            }
+        }
+        locationPermissionRequest.launch(arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION))
+    }
+
+    private fun setLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocationPermissions()
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                location?.let {
+                    loc.latitude = location.latitude
+                    loc.longitude = location.longitude
+                }
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
