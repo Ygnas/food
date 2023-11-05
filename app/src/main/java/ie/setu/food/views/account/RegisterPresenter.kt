@@ -1,14 +1,10 @@
 package ie.setu.food.views.account
 
 import android.content.Intent
-import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import ie.setu.food.R
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.UserModel
-import ie.setu.food.models.generateRandomId
-import ie.setu.food.views.foodlist.FoodListView
 
 class RegisterPresenter(val view: RegisterView) {
 

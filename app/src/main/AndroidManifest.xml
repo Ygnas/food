@@ -38,10 +38,12 @@
             android:label="@string/title_account" />
         <activity
             android:name=".views.account.RegisterView"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_register" />
         <activity
             android:name=".views.account.LoginView"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_login" />
         <activity
             android:name=".views.gallery.GalleryPresenter"
             android:exported="false" />

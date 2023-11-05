@@ -13,11 +13,13 @@ class LoginPresenter(val view: LoginView) {
     private lateinit var loginIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var registerIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var accountIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mainIntentLauncher: ActivityResultLauncher<Intent>
 
     init {
         registerLoginCallback()
         registerRegisterCallback()
         registerAccountCallback()
+        registerMainCallback()
     }
 
     private fun getUsers() = app.users.findAll()
@@ -45,6 +47,11 @@ class LoginPresenter(val view: LoginView) {
         registerIntentLauncher.launch(launcherIntent)
     }
 
+    fun doShowMain() {
+        val launcherIntent = Intent(view, FoodListView::class.java)
+        mainIntentLauncher.launch(launcherIntent)
+    }
+
     private fun registerLoginCallback() {
         loginIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -59,6 +66,12 @@ class LoginPresenter(val view: LoginView) {
 
     private fun registerAccountCallback() {
         accountIntentLauncher =
+            view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { }
+    }
+
+    private fun registerMainCallback() {
+        mainIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { }
     }
