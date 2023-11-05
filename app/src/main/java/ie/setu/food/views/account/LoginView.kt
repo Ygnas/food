@@ -2,6 +2,7 @@ package ie.setu.food.views.account
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -23,6 +24,13 @@ class LoginView : AppCompatActivity() {
         presenter = LoginPresenter(this)
 
         app = application as MainApp
+
+        setSupportActionBar(this.binding.toolbaraccount).apply {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
+
+        binding.toolbaraccount.title = title
 
         val masterKey: MasterKey = MasterKey.Builder(applicationContext)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
@@ -48,7 +56,7 @@ class LoginView : AppCompatActivity() {
 
 
         binding.buttonLogin.setOnClickListener{
-            val user = presenter.login(binding.editTextUser.text.toString(), binding.editTextPass.text.toString())
+            val user = presenter.login(binding.editTextUser.text.toString().lowercase(), binding.editTextPass.text.toString())
 
             if (user != null) {
                 binding.loginError.text = ""
@@ -65,5 +73,14 @@ class LoginView : AppCompatActivity() {
         binding.buttonRegister.setOnClickListener{
             presenter.doRegister()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                presenter.doShowMain()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

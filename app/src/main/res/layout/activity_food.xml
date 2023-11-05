@@ -125,7 +125,7 @@
                     android:stateListAnimator="@null"
                     android:text="@string/button_addFood"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/button_camera"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/material_foodDescription" />
 
@@ -135,7 +135,6 @@
                     android:layout_height="48dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
@@ -143,7 +142,7 @@
                     android:text="@string/button_addImage"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/foodImage"
-                    app:layout_constraintEnd_toStartOf="@+id/button_camera"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/foodLocation"
                     app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
@@ -195,14 +194,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="14dp"
                     android:layout_marginEnd="8dp"
                     android:textSize="16sp"
                     app:icon="@drawable/baseline_photo_camera_24"
                     app:iconSize="28dp"
-                    app:layout_constraintBottom_toTopOf="@+id/foodImage"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chooseImage"
-                    app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
+                    app:layout_constraintStart_toEndOf="@+id/btnAdd"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

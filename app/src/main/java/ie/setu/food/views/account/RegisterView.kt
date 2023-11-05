@@ -2,6 +2,7 @@ package ie.setu.food.views.account
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityRegisterViewBinding
 import ie.setu.food.main.MainApp
@@ -19,8 +20,15 @@ class RegisterView : AppCompatActivity() {
         presenter = RegisterPresenter(this)
         app = application as MainApp
 
+        setSupportActionBar(this.binding.toolbaraccount).apply {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
+        }
+
+        binding.toolbaraccount.title = title
+
         binding.buttonRegisterAccount.setOnClickListener{
-            val username = binding.editTextUser.text.toString()
+            val username = binding.editTextUser.text.toString().lowercase()
             val password = binding.editTextPass.text.toString()
             val passwordrepeat = binding.editTextRepeatPass.text.toString()
             if (username.isEmpty() && password.isEmpty()) {
@@ -35,7 +43,6 @@ class RegisterView : AppCompatActivity() {
                 binding.loginError.text = getString(R.string.register_error_password)
                 return@setOnClickListener
             }
-//            && password == password2 && username.isNotEmpty() && password.isNotEmpty()
             val user = presenter.register(
                 username,
                 password)
@@ -46,5 +53,13 @@ class RegisterView : AppCompatActivity() {
                 binding.loginError.text = getString(R.string.register_error)
             }
         }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                presenter.doLogin()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
