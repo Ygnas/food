@@ -1,8 +1,10 @@
 package ie.setu.food.views.gallery
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.GridLayoutManager
 import ie.setu.food.databinding.ActivityGalleryViewBinding
 import ie.setu.food.main.MainApp
@@ -50,6 +52,7 @@ class GalleryView : AppCompatActivity(), ImageListener {
     }
 
     override fun onFoodClick(food: FoodModel, position: Int) {
-        TODO("Not yet implemented")
+        this.position = position
+        presenter.doEditFood(food, this.position)
     }
 }
