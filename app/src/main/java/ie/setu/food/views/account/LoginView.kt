@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.google.firebase.auth.FirebaseUser
+import com.google.gson.Gson
 import ie.setu.food.R
 import ie.setu.food.databinding.ActivityLoginViewBinding
+import ie.setu.food.firebase.FirebaseAuthentication
 import ie.setu.food.main.MainApp
 
 
@@ -24,6 +29,10 @@ class LoginView : AppCompatActivity() {
         presenter = LoginPresenter(this)
 
         app = application as MainApp
+
+        val auth  = FirebaseAuthentication(app)
+        val liveFirebaseUser : MutableLiveData<FirebaseUser?> = auth.liveFirebaseUser
+        val authError : MutableLiveData<Boolean> = auth.errorStatus
 
         setSupportActionBar(this.binding.toolbaraccount).apply {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -44,30 +53,18 @@ class LoginView : AppCompatActivity() {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
-        try {
-            val id = sharedPreferences.getString("user", "")!!.toLong()
-            val user = app.users.findById(id)
-            if (user != null) {
-                presenter.doAccount()
-            }
-        } catch (e: Exception) {
-            binding.loginError.text = ""
+        liveFirebaseUser.observe(this) { user ->
+            presenter.doAccount()
         }
 
+        authError.observe(this) { error ->
+            if (error) {
+              binding.loginError.text = getString(R.string.incorrect_login)
+            }
+        }
 
         binding.buttonLogin.setOnClickListener{
-            val user = presenter.login(binding.editTextUser.text.toString().lowercase(), binding.editTextPass.text.toString())
-
-            if (user != null) {
-                binding.loginError.text = ""
-                val editor = sharedPreferences.edit()
-                editor.putString("user", user.id.toString())
-                editor.apply()
-                Toast.makeText(app.applicationContext, getString(R.string.success_login), Toast.LENGTH_LONG).show()
-                presenter.doLogin()
-            } else {
-                binding.loginError.text = getString(R.string.incorrect_login)
-            }
+            auth.login(binding.editTextUser.text.toString().lowercase(), binding.editTextPass.text.toString())
         }
 
         binding.buttonRegister.setOnClickListener{

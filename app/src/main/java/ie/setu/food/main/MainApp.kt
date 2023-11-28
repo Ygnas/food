@@ -1,10 +1,7 @@
 package ie.setu.food.main
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import ie.setu.food.models.FoodJSONStore
-import ie.setu.food.models.FoodMemStore
 import ie.setu.food.models.FoodStore
 import ie.setu.food.models.UserJSONStore
 import ie.setu.food.models.UserStore
