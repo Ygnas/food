@@ -9,10 +9,34 @@
         android:id="@+id/nav_home"
         android:name="ie.setu.food.ui.foodlist.FoodListFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_food_list" />
-    <activity
-        android:id="@+id/accountView"
-        android:name="ie.setu.food.views.account.AccountView"
-        android:label="activity_account_view"
-        tools:layout="@layout/activity_account_view" />
+        tools:layout="@layout/fragment_food_list" >
+        <action
+            android:id="@+id/action_nav_home_to_foodFragment"
+            app:destination="@id/foodFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="ie.setu.food.ui.food.FoodFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_food" >
+        <argument
+            android:name="food"
+            app:argType="ie.setu.food.models.FoodModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="ie.setu.food.ui.gallery.GalleryFragment"
+        android:label="@string/title_activity_gallery"
+        tools:layout="@layout/fragment_gallery" />
 </navigation>
