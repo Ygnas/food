@@ -4,6 +4,7 @@ import android.R
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
@@ -22,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import ie.setu.food.databinding.FragmentFoodBinding
 import ie.setu.food.firebase.FirebaseAuthentication
+import ie.setu.food.firebase.FirebaseStorage
 import ie.setu.food.helpers.showImagePicker
 import ie.setu.food.models.FoodModel
 import ie.setu.food.models.FoodType
@@ -33,6 +35,7 @@ class FoodFragment : Fragment() {
     private lateinit var binding: FragmentFoodBinding
     private lateinit var viewModel: FoodViewModel
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var imageUri: Uri
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +51,8 @@ class FoodFragment : Fragment() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    binding.foodImage.setImageURI(result.data!!.data!!)
+                    imageUri = result.data!!.data!!
+                    binding.foodImage.setImageURI(imageUri)
                 }
             }
 
@@ -57,6 +61,7 @@ class FoodFragment : Fragment() {
             binding.foodDescription.setText(description)
             binding.editTextDate.setText(date)
             binding.spinner.setSelection(foodType.ordinal)
+            FirebaseStorage.loadImageFromFirebase(uid!!, binding.foodImage)
             if (date.isEmpty()) {
                 binding.editTextDate.setText(
                     SimpleDateFormat.getDateInstance()
@@ -87,6 +92,11 @@ class FoodFragment : Fragment() {
                 )
                 val auth = FirebaseAuthentication(Application())
                 val liveFirebaseUser: MutableLiveData<FirebaseUser> = auth.liveFirebaseUser
+
+                val inputStream = requireContext().contentResolver.openInputStream(imageUri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                inputStream?.close()
+                viewModel.uploadImage("-Nl-9H6ndc24GemlZYO9", bitmap)
                 viewModel.addFood(liveFirebaseUser, food)
             }
         }
@@ -115,6 +125,4 @@ class FoodFragment : Fragment() {
         }
         datePicker.show(childFragmentManager, "tag")
     }
-
-
 }
