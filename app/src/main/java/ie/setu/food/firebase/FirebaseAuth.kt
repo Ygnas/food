@@ -9,8 +9,8 @@ import timber.log.Timber.i
 class FirebaseAuthentication(application: Application) {
     private var application: Application? = null
 
-    private var firebaseAuth: FirebaseAuth? = null
-    var liveFirebaseUser = MutableLiveData<FirebaseUser?>()
+    private var firebaseAuth: FirebaseAuth
+    var liveFirebaseUser = MutableLiveData<FirebaseUser>()
     var errorStatus = MutableLiveData<Boolean>()
 
     init {
