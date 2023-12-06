@@ -48,4 +48,3 @@ object FirebaseStorage {
             Picasso.get().load(imageUrl).into(imageView)
         }.addOnFailureListener {}
     }
-}
