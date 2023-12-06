@@ -1,7 +1,7 @@
 package ie.setu.food.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,6 +12,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import ie.setu.food.R
 import ie.setu.food.databinding.HomeMainBinding
+import ie.setu.food.models.FoodModel
+import ie.setu.food.ui.foodlist.FoodListFragmentDirections
 
 class Home : AppCompatActivity() {
 
@@ -34,12 +36,29 @@ class Home : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home
+                R.id.nav_home, R.id.foodFragment, R.id.galleryFragment
             ), drawerLayout
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_home -> {
+                    navController.navigate(R.id.nav_home)
+                }
+                R.id.foodFragment -> {
+                    navController.navigate(FoodListFragmentDirections.actionNavHomeToFoodFragment(FoodModel()))
+                }
+                R.id.galleryFragment -> {
+                    navController.navigate(FoodListFragmentDirections.actionNavHomeToGalleryFragment())
+                }
+            }
+            drawerLayout.closeDrawers()
+
+            true
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
