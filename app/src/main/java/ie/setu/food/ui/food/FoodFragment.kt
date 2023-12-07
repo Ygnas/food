@@ -1,11 +1,14 @@
 package ie.setu.food.ui.food
 
+import android.Manifest
 import android.R
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,19 +17,24 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseUser
 import ie.setu.food.databinding.FragmentFoodBinding
-import ie.setu.food.firebase.FirebaseAuthentication
+import ie.setu.food.firebase.FirebaseDB
 import ie.setu.food.firebase.FirebaseStorage
 import ie.setu.food.helpers.showImagePicker
 import ie.setu.food.models.FoodModel
 import ie.setu.food.models.FoodType
+import ie.setu.food.ui.account.LoggedInViewModel
+import ie.setu.food.views.camera.CameraView
 import java.util.Date
 
 class FoodFragment : Fragment() {
@@ -35,7 +43,10 @@ class FoodFragment : Fragment() {
     private lateinit var binding: FragmentFoodBinding
     private lateinit var viewModel: FoodViewModel
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cameraIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var imageUri: Uri
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,27 +59,49 @@ class FoodFragment : Fragment() {
         spinner.adapter =
             ArrayAdapter(requireContext(), R.layout.simple_spinner_item, FoodType.values())
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        setLocation()
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     imageUri = result.data!!.data!!
                     binding.foodImage.setImageURI(imageUri)
+                    args.food?.image = imageUri
                 }
             }
 
-        with(args.food) {
-            binding.foodTitle.setText(title)
-            binding.foodDescription.setText(description)
-            binding.editTextDate.setText(date)
-            binding.spinner.setSelection(foodType.ordinal)
-            FirebaseStorage.loadImageFromFirebase(uid!!, binding.foodImage)
-            if (date.isEmpty()) {
-                binding.editTextDate.setText(
-                    SimpleDateFormat.getDateInstance()
-                        .format(MaterialDatePicker.todayInUtcMilliseconds())
-                )
+        cameraIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    imageUri = data?.getParcelableExtra<Uri>("imagePath")!!
+                    binding.foodImage.setImageURI(imageUri)
+                    args.food?.image = imageUri
+                }
+            }
+
+        args.food?.let { food ->
+            with(food) {
+                binding.foodTitle.setText(title)
+                binding.foodDescription.setText(description)
+                binding.editTextDate.setText(date)
+                binding.spinner.setSelection(foodType.ordinal)
+                uid?.let { FirebaseStorage.loadImageFromFirebase(it, binding.foodImage, 450) }
+                if (date.isEmpty()) {
+                    binding.editTextDate.setText(
+                        SimpleDateFormat.getDateInstance()
+                            .format(MaterialDatePicker.todayInUtcMilliseconds())
+                    )
+                }
             }
         }
+        if (binding.editTextDate.text.isNullOrEmpty()) {
+            binding.editTextDate.setText(
+                SimpleDateFormat.getDateInstance()
+                    .format(MaterialDatePicker.todayInUtcMilliseconds())
+            )
+        }
+
         setButtonListener(binding)
         return binding.root
     }
@@ -88,16 +121,23 @@ class FoodFragment : Fragment() {
                     description = binding.foodDescription.text.toString(),
                     image = Uri.EMPTY,
                     date = binding.editTextDate.text.toString(),
-                    foodType = binding.spinner.selectedItem as FoodType
+                    foodType = binding.spinner.selectedItem as FoodType,
+                    uid = args.food?.uid,
+                    lat = args.food?.lat!!,
+                    lng = args.food?.lng!!
                 )
-                val auth = FirebaseAuthentication(Application())
-                val liveFirebaseUser: MutableLiveData<FirebaseUser> = auth.liveFirebaseUser
-
-                val inputStream = requireContext().contentResolver.openInputStream(imageUri)
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                inputStream?.close()
-                viewModel.uploadImage("-Nl-9H6ndc24GemlZYO9", bitmap)
-                viewModel.addFood(liveFirebaseUser, food)
+                viewModel.addFood(loggedInViewModel.liveFirebaseUser, food)
+                val bitmap: Bitmap
+                try {
+                    val inputStream = requireContext().contentResolver.openInputStream(imageUri)
+                    bitmap = BitmapFactory.decodeStream(inputStream)
+                    inputStream?.close()
+                    FirebaseDB.observableKey.observe(viewLifecycleOwner) { key ->
+                        viewModel.uploadImage(key, bitmap)
+                    }
+                } catch (_: Exception) {
+                }
+                findNavController().navigateUp()
             }
         }
 
@@ -107,6 +147,10 @@ class FoodFragment : Fragment() {
 
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher, requireContext())
+        }
+
+        binding.buttonCamera.setOnClickListener {
+            startCamera()
         }
     }
 
@@ -124,5 +168,48 @@ class FoodFragment : Fragment() {
             binding.editTextDate.setText(formattedDate)
         }
         datePicker.show(childFragmentManager, "tag")
+    }
+
+    private fun startCamera() {
+        val launcherIntent = Intent(requireContext(), CameraView::class.java)
+        cameraIntentLauncher.launch(launcherIntent)
+    }
+
+    private fun setLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocationPermissions()
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                location?.let {
+                    args.food?.lat = location.latitude
+                    args.food?.lng = location.longitude
+                }
+            }
+    }
+
+    private fun requestLocationPermissions() {
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {}
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {}
+            }
+        }
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
 }

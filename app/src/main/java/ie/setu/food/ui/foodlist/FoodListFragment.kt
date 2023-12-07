@@ -5,26 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import ie.setu.food.databinding.FragmentFoodListBinding
 import ie.setu.food.models.FoodModel
+import ie.setu.food.ui.account.LoggedInViewModel
 import ie.setu.food.views.foodlist.FoodAdapter
 import ie.setu.food.views.foodlist.FoodListener
-import timber.log.Timber.i
 
 class FoodListFragment : Fragment(), FoodListener {
 
     private lateinit var binding: FragmentFoodListBinding
-    private lateinit var viewModel: FoodListViewModel
+    private val viewModel: FoodListViewModel by activityViewModels()
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFoodListBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[FoodListViewModel::class.java]
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
         viewModel.observableFoodList.observe(viewLifecycleOwner) { foods ->
@@ -40,16 +41,22 @@ class FoodListFragment : Fragment(), FoodListener {
         binding.recyclerView.adapter = FoodAdapter(foodList, this)
         if (foodList.isEmpty()) {
             binding.recyclerView.visibility = View.GONE
-//            binding.donationsNotFound.visibility = View.VISIBLE
         } else {
-            i(foodList.toString())
             binding.recyclerView.visibility = View.VISIBLE
-//            binding.donationsNotFound.visibility = View.GONE
         }
     }
 
     override fun onFoodClick(food: FoodModel, position: Int) {
-        val action = FoodListFragmentDirections.actionNavHomeToFoodFragment(food)
-        findNavController().navigate(action)
+        findNavController().navigate(FoodListFragmentDirections.actionNavHomeToFoodFragment(food))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner) { firebaseUser ->
+            if (firebaseUser != null) {
+                viewModel.liveFirebaseUser.value = firebaseUser
+                viewModel.load()
+            }
+        }
     }
 }

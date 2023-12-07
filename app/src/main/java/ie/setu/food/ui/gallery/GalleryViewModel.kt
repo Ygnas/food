@@ -19,6 +19,10 @@ class GalleryViewModel : ViewModel() {
     }
 
     fun load() {
-        FirebaseDB.findAll(foodList)
+        try {
+            FirebaseDB.findAll(liveFirebaseUser.value?.uid!!, foodList)
+        } catch (_: Exception) {
+        }
+
     }
 }
