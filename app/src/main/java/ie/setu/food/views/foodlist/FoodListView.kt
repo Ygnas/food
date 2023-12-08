@@ -118,7 +118,7 @@ class FoodListView : AppCompatActivity(), FoodListener {
             R.id.item_map -> {
                 presenter.doShowFoodsMap()
             }
-            R.id.item_login -> {
+            R.id.foodFragment -> {
                 presenter.doShowLogin()
             }
         }
