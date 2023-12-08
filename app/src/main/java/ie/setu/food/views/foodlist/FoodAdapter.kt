@@ -3,17 +3,19 @@ package ie.setu.food.views.foodlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import ie.setu.food.databinding.CardFoodBinding
 import ie.setu.food.firebase.FirebaseStorage
 import ie.setu.food.models.FoodModel
 
 
 interface FoodListener {
-    fun onFoodClick(food: FoodModel, position : Int)
+    fun onFoodClick(food: FoodModel, position: Int)
 }
 
-class FoodAdapter constructor(private var foods: List<FoodModel>, private val listener: FoodListener) :
+class FoodAdapter constructor(
+    private var foods: List<FoodModel>,
+    private val listener: FoodListener
+) :
     RecyclerView.Adapter<FoodAdapter.MainHolder>() {
     private var originalFoods: List<FoodModel> = foods
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -34,7 +36,10 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
             originalFoods
         } else {
             originalFoods.filter {
-                it.title.contains(query, ignoreCase = true) || it.description.contains(query, ignoreCase = true) || it.foodType.toString().contains(query, ignoreCase = true)
+                it.title.contains(query, ignoreCase = true) || it.description.contains(
+                    query,
+                    ignoreCase = true
+                ) || it.foodType.toString().contains(query, ignoreCase = true)
             }
         }
     }
@@ -55,7 +60,7 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
             binding.foods = food
             binding.foodTitle.text = food.title
             binding.description.text = food.description
-            FirebaseStorage.loadImageFromFirebase(food.uid!!,binding.imageIcon)
+            FirebaseStorage.loadImageFromFirebase(food.uid!!, binding.imageIcon, 200)
             binding.root.setOnClickListener { listener.onFoodClick(food, adapterPosition) }
         }
     }

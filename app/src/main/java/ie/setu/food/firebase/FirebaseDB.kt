@@ -1,18 +1,33 @@
 package ie.setu.food.firebase
 
+import android.graphics.BitmapFactory
+import android.net.Uri
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.core.Context
 import ie.setu.food.models.FoodModel
 import ie.setu.food.models.FoodStore
 import timber.log.Timber.i
+import java.security.Provider
 
 object FirebaseDB: FoodStore {
 
     var database = FirebaseDatabase.getInstance().reference
+
+    private val keyUsed = MutableLiveData<String>()
+
+    var observableKey: LiveData<String>
+        get() = keyUsed
+        set(value) {
+            keyUsed.value = value.value
+        }
+
     override fun findAll(): List<FoodModel> {
         TODO("Not yet implemented")
     }
@@ -28,8 +43,8 @@ object FirebaseDB: FoodStore {
                     val localList = ArrayList<FoodModel>()
                     val children = snapshot.children
                     children.forEach {
-                        val donation = FoodModel.fromMap(it)
-                        localList.add(donation)
+                        val food = FoodModel.fromMap(it)
+                        localList.add(food)
                     }
                     database.child("foods")
                         .removeEventListener(this)
@@ -51,8 +66,8 @@ object FirebaseDB: FoodStore {
                     val localList = ArrayList<FoodModel>()
                     val children = snapshot.children
                     children.forEach {
-                        val donation = it.getValue(FoodModel::class.java)
-                        localList.add(donation!!)
+                        val food = FoodModel.fromMap(it)
+                        localList.add(food)
                     }
                     database.child("user-foods").child(userid)
                         .removeEventListener(this)
@@ -67,7 +82,7 @@ object FirebaseDB: FoodStore {
         TODO("Not yet implemented")
     }
 
-    fun findById(uid: String,id: Long) {
+    fun findById(uid: String, id: Long) {
         TODO("Not yet implemented")
     }
 
@@ -76,10 +91,14 @@ object FirebaseDB: FoodStore {
     }
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, food: FoodModel) {
-        val uid = "12345"
-        val key = database.child("foods").push().key ?: return
+        val uid = firebaseUser.value?.uid
+        val key = if (food.uid.isNullOrEmpty()) {
+            database.child("foods").push().key ?: return
+        } else {
+            food.uid
+        }
         food.uid = key
-
+        keyUsed.value = key.toString()
         val childAdd = HashMap<String, Any>()
         childAdd["/foods/$key"] = food.toMap()
         childAdd["/user-foods/$uid/$key"] = food.toMap()
@@ -95,7 +114,7 @@ object FirebaseDB: FoodStore {
         TODO("Not yet implemented")
     }
 
-    fun updateImageRef(userid: String,imageUri: String) {
+    fun updateImageRef(userid: String, imageUri: String) {
 
         val userDonations = database.child("user-donations").child(userid)
         val allDonations = database.child("donations")
@@ -113,3 +132,4 @@ object FirebaseDB: FoodStore {
                 }
             })
     }
+}
