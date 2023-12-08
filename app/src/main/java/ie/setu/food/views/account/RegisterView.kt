@@ -32,7 +32,7 @@ class RegisterView : AppCompatActivity() {
         }
 
         val auth  = FirebaseAuthentication(app)
-        val liveFirebaseUser : MutableLiveData<FirebaseUser?> = auth.liveFirebaseUser
+        val liveFirebaseUser : MutableLiveData<FirebaseUser> = auth.liveFirebaseUser
         val authError : MutableLiveData<Boolean> = auth.errorStatus
 
         liveFirebaseUser.observe(this) { user ->

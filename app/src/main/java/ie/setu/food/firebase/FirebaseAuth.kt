@@ -12,14 +12,24 @@ class FirebaseAuthentication(application: Application) {
     private var firebaseAuth: FirebaseAuth
     var liveFirebaseUser = MutableLiveData<FirebaseUser>()
     var errorStatus = MutableLiveData<Boolean>()
+    var logout = MutableLiveData<Boolean>()
 
     init {
         this.application = application
         firebaseAuth = FirebaseAuth.getInstance()
 
-        if (firebaseAuth!!.currentUser != null) {
-            liveFirebaseUser.postValue(firebaseAuth!!.currentUser)
+        if (firebaseAuth.currentUser != null) {
+            liveFirebaseUser.postValue(firebaseAuth.currentUser)
             errorStatus.postValue(false)
+        }
+    }
+
+    fun authObserver() {
+        firebaseAuth.addAuthStateListener { auth ->
+            if (auth.currentUser != null) {
+                liveFirebaseUser.postValue(auth.currentUser)
+            }
+
         }
     }
 
@@ -36,11 +46,11 @@ class FirebaseAuthentication(application: Application) {
             }
     }
 
-    fun register(email: String?, password: String?) {
-        firebaseAuth!!.createUserWithEmailAndPassword(email!!, password!!)
+    fun register(email: String, password: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(application!!.mainExecutor) { task ->
                 if (task.isSuccessful) {
-                    liveFirebaseUser.postValue(firebaseAuth!!.currentUser)
+                    liveFirebaseUser.postValue(firebaseAuth.currentUser)
                     errorStatus.postValue(false)
                 } else {
                     i("Registration Failure: $task.exception!!.message")
@@ -52,7 +62,7 @@ class FirebaseAuthentication(application: Application) {
 
     fun logOut() {
         firebaseAuth!!.signOut()
-        liveFirebaseUser.postValue(null)
+        logout.postValue(true)
         errorStatus.postValue(false)
     }
 }
