@@ -39,12 +39,13 @@ object FirebaseStorage {
         }
     }
 
-    fun loadImageFromFirebase(uid: String, imageView: ImageView) {
+    fun loadImageFromFirebase(uid: String, imageView: ImageView, size: Int) {
         val imageRef = storage.child("images").child("$uid.jpg")
 
         imageRef.downloadUrl.addOnSuccessListener { uri ->
             val imageUrl = uri.toString()
 
-            Picasso.get().load(imageUrl).into(imageView)
+            Picasso.get().load(imageUrl).resize(size, size).into(imageView)
         }.addOnFailureListener {}
     }
+}
