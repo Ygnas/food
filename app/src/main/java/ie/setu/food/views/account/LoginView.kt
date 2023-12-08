@@ -31,7 +31,7 @@ class LoginView : AppCompatActivity() {
         app = application as MainApp
 
         val auth  = FirebaseAuthentication(app)
-        val liveFirebaseUser : MutableLiveData<FirebaseUser?> = auth.liveFirebaseUser
+        val liveFirebaseUser : MutableLiveData<FirebaseUser> = auth.liveFirebaseUser
         val authError : MutableLiveData<Boolean> = auth.errorStatus
 
         setSupportActionBar(this.binding.toolbaraccount).apply {

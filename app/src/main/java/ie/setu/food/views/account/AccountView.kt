@@ -28,7 +28,7 @@ class AccountView : AppCompatActivity() {
         }
 
         val auth  = FirebaseAuthentication(app)
-        val liveFirebaseUser : MutableLiveData<FirebaseUser?> = auth.liveFirebaseUser
+        val liveFirebaseUser : MutableLiveData<FirebaseUser> = auth.liveFirebaseUser
 
         binding.toolbaraccount.title = title
         liveFirebaseUser.observe(this) { user ->
