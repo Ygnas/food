@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_add"
+        android:id="@+id/foodFragment"
         android:icon="@drawable/baseline_add_24"
         android:title="@string/button_addFood"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/item_gallery"
+        android:id="@+id/galleryFragment"
         android:icon="@drawable/baseline_image_24"
         android:title="@string/button_gallery"
         app:showAsAction="ifRoom" />
@@ -18,7 +18,7 @@
         android:title="@string/title_activity_food_maps"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/item_login"
+        android:id="@+id/loginFragment"
         android:icon="@drawable/baseline_account_circle_24"
         android:title="@string/menu_account"
         app:showAsAction="ifRoom"/>

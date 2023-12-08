@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    android:label="@string/title_login"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="ie.setu.food.ui.foodlist.FoodListFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_food_list">
+        <action
+            android:id="@+id/action_nav_home_to_foodFragment"
+            app:destination="@id/foodFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="ie.setu.food.ui.food.FoodFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_food">
+        <argument
+            android:name="food"
+            app:argType="ie.setu.food.models.FoodModel" />
+        <action
+            android:id="@+id/action_foodFragment_to_cameraView"
+            app:destination="@id/cameraView" />
+    </fragment>
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="ie.setu.food.ui.gallery.GalleryFragment"
+        android:label="@string/title_activity_gallery"
+        tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ie.setu.food.ui.account.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/cameraView"
+        android:name="ie.setu.food.views.camera.CameraView"
+        android:label="activity_camera_view"
+        tools:layout="@layout/activity_camera_view" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="ie.setu.food.ui.account.RegisterFragment"
+        android:label="@string/title_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+</navigation>

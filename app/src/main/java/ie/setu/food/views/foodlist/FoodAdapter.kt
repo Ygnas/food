@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ie.setu.food.databinding.CardFoodBinding
+import ie.setu.food.firebase.FirebaseStorage
 import ie.setu.food.models.FoodModel
 
 
@@ -50,9 +51,11 @@ class FoodAdapter constructor(private var foods: List<FoodModel>, private val li
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(food: FoodModel, listener: FoodListener) {
+            binding.root.tag = food
+            binding.foods = food
             binding.foodTitle.text = food.title
             binding.description.text = food.description
-            Picasso.get().load(food.image).resize(200, 200).into(binding.imageIcon)
+            FirebaseStorage.loadImageFromFirebase(food.uid!!,binding.imageIcon)
             binding.root.setOnClickListener { listener.onFoodClick(food, adapterPosition) }
         }
     }
