@@ -42,12 +42,12 @@ class FoodListView : AppCompatActivity(), FoodListener {
         loadFoods()
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchFoods(query!!)
+//                searchFoods(query!!)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchFoods(newText!!)
+//                searchFoods(newText!!)
                 return true
             }
 
@@ -61,7 +61,7 @@ class FoodListView : AppCompatActivity(), FoodListener {
 
         binding.filterChip.setOnClickListener {
             binding.filterChip.visibility = View.GONE
-            filterFoodsByDate("")
+//            filterFoodsByDate("")
         }
     }
 
@@ -136,19 +136,19 @@ class FoodListView : AppCompatActivity(), FoodListener {
         onRefresh()
     }
 
-    private fun searchFoods(query: String) {
-        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
-        foodAdapter.search(query)
-        binding.recyclerView.adapter = foodAdapter
-        onRefresh()
-    }
-
-    fun filterFoodsByDate(query: String) {
-        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
-        foodAdapter.filterByDate(query)
-        binding.recyclerView.adapter = foodAdapter
-        onRefresh()
-    }
+//    private fun searchFoods(query: String) {
+//        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
+//        foodAdapter.search(query)
+//        binding.recyclerView.adapter = foodAdapter
+//        onRefresh()
+//    }
+//
+//    fun filterFoodsByDate(query: String) {
+//        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
+//        foodAdapter.filterByDate(query)
+//        binding.recyclerView.adapter = foodAdapter
+//        onRefresh()
+//    }
 
     fun setChip(text: String) {
         binding.filterChip.text = "Filtering By Date: $text"

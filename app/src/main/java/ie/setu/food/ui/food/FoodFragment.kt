@@ -1,7 +1,6 @@
 package ie.setu.food.ui.food
 
 import android.Manifest
-import android.R
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -57,28 +56,11 @@ class FoodFragment : Fragment() {
 
         val spinner = binding.spinner
         spinner.adapter =
-            ArrayAdapter(requireContext(), R.layout.simple_spinner_item, FoodType.values())
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, FoodType.values())
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         setLocation()
-        imageIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    imageUri = result.data!!.data!!
-                    binding.foodImage.setImageURI(imageUri)
-                    args.food?.image = imageUri
-                }
-            }
-
-        cameraIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    val data: Intent? = result.data
-                    imageUri = data?.getParcelableExtra<Uri>("imagePath")!!
-                    binding.foodImage.setImageURI(imageUri)
-                    args.food?.image = imageUri
-                }
-            }
+        cameraImageIntent()
 
         args.food?.let { food ->
             with(food) {
@@ -123,8 +105,9 @@ class FoodFragment : Fragment() {
                     date = binding.editTextDate.text.toString(),
                     foodType = binding.spinner.selectedItem as FoodType,
                     uid = args.food?.uid,
-                    lat = args.food?.lat!!,
-                    lng = args.food?.lng!!
+                    lat = args.food!!.lat,
+                    lng = args.food?.lng!!,
+                    zoom = 16f
                 )
                 viewModel.addFood(loggedInViewModel.liveFirebaseUser, food)
                 val bitmap: Bitmap
@@ -211,5 +194,26 @@ class FoodFragment : Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             )
         )
+    }
+
+    private fun cameraImageIntent() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    imageUri = result.data!!.data!!
+                    binding.foodImage.setImageURI(imageUri)
+                    args.food?.image = imageUri
+                }
+            }
+
+        cameraIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    imageUri = data?.getParcelableExtra<Uri>("imagePath")!!
+                    binding.foodImage.setImageURI(imageUri)
+                    args.food?.image = imageUri
+                }
+            }
     }
 }

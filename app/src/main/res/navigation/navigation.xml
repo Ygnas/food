@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_nav_home_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_foodMapFragment"
+            app:destination="@id/foodMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
@@ -74,4 +77,9 @@
         android:name="ie.setu.food.ui.account.RegisterFragment"
         android:label="@string/title_register"
         tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/foodMapFragment"
+        android:name="ie.setu.food.ui.food.FoodMapFragment"
+        android:label="@string/title_activity_food_maps"
+        tools:layout="@layout/fragment_food_map" />
 </navigation>

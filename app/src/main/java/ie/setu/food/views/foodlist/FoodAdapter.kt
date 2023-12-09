@@ -31,37 +31,38 @@ class FoodAdapter constructor(
 
     override fun getItemCount(): Int = foods.size
 
-    fun search(query: String) {
-        foods = if (query.isEmpty()) {
-            originalFoods
-        } else {
-            originalFoods.filter {
-                it.title.contains(query, ignoreCase = true) || it.description.contains(
-                    query,
-                    ignoreCase = true
-                ) || it.foodType.toString().contains(query, ignoreCase = true)
-            }
-        }
-    }
-
-    fun filterByDate(date: String?) {
-        foods = if (date!!.isNotBlank()) {
-            originalFoods.filter { it.date == date }
-        } else {
-            originalFoods
-        }
-    }
+//    fun search(query: String) {
+//        foods = if (query.isEmpty()) {
+//            originalFoods
+//        } else {
+//            originalFoods.filter {
+//                it.title.contains(query, ignoreCase = true) || it.description.contains(
+//                    query,
+//                    ignoreCase = true
+//                ) || it.foodType.toString().contains(query, ignoreCase = true)
+//            }
+//        }
+//    }
+//
+//    fun filterByDate(date: String?) {
+//        foods = if (date!!.isNotBlank()) {
+//            originalFoods.filter { it.date == date }
+//        } else {
+//            originalFoods
+//        }
+//    }
 
     class MainHolder(private val binding: CardFoodBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(food: FoodModel, listener: FoodListener) {
             binding.root.tag = food
-            binding.foods = food
+            binding.food = food
             binding.foodTitle.text = food.title
             binding.description.text = food.description
             FirebaseStorage.loadImageFromFirebase(food.uid!!, binding.imageIcon, 200)
             binding.root.setOnClickListener { listener.onFoodClick(food, adapterPosition) }
+            binding.executePendingBindings()
         }
     }
 }
