@@ -19,4 +19,8 @@ class FoodViewModel : ViewModel() {
     fun uploadImage(uid: String, bitmap: Bitmap) {
         FirebaseStorage.uploadImageToFirebase(uid, bitmap, true)
     }
+
+    fun findById(uid: String, foods: List<FoodModel>): FoodModel? {
+        return FirebaseDB.findById(uid,foods)
+    }
 }

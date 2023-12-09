@@ -11,7 +11,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.squareup.picasso.Picasso
 import ie.setu.food.databinding.FragmentFoodMapBinding
+import ie.setu.food.firebase.FirebaseDB
+import ie.setu.food.firebase.FirebaseStorage
 import ie.setu.food.ui.foodlist.FoodListViewModel
 import timber.log.Timber
 
@@ -19,6 +22,7 @@ class FoodMapFragment : Fragment(), GoogleMap.OnMapClickListener, GoogleMap.OnMa
 
     private lateinit var binding: FragmentFoodMapBinding
     private val viewModel: FoodListViewModel by activityViewModels()
+    private val viewModelFood: FoodViewModel by activityViewModels()
     private lateinit var map: GoogleMap
 
     override fun onCreateView(
@@ -39,15 +43,13 @@ class FoodMapFragment : Fragment(), GoogleMap.OnMapClickListener, GoogleMap.OnMa
     private fun configureMap() {
         map.uiSettings.isZoomControlsEnabled = true
         viewModel.observableFoodList.observe(viewLifecycleOwner) { foods ->
-            Timber.i("Perkrove!!!!!!!!!!!!!!!!!!")
             foods?.forEach {
-                Timber.i("krauna")
                 if (it.lat != 0.0 || it.lng != 0.0) {
                     val loc = LatLng(it.lat, it.lng)
                     val options = MarkerOptions().title(it.title).position(loc)
                     map.setOnMapClickListener(this)
                     map.setOnMarkerClickListener(this)
-                    map.addMarker(options)?.tag = it.id
+                    map.addMarker(options)?.tag = it.uid
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
                 }
             }
@@ -55,11 +57,17 @@ class FoodMapFragment : Fragment(), GoogleMap.OnMapClickListener, GoogleMap.OnMa
     }
 
     override fun onMapClick(p0: LatLng) {
-        TODO("Not yet implemented")
+        binding.cardView.visibility = View.GONE
     }
 
-    override fun onMarkerClick(p0: Marker): Boolean {
-        TODO("Not yet implemented")
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val tag = marker.tag as String
+        val food = viewModelFood.findById(tag,viewModel.observableFoodList.value!!)
+        binding.currentTitle.text = food!!.title
+        binding.currentDescription.text = food.description
+        FirebaseStorage.loadImageFromFirebase(tag, binding.currentImage, 200)
+        binding.cardView.visibility = View.VISIBLE
+        return false
     }
 
     override fun onDestroy() {
