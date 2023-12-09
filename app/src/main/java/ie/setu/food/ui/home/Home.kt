@@ -63,6 +63,7 @@ class Home : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        drawerHeaderBinding.logoutBtn.visibility = View.GONE
         loggedInViewModel.liveFirebaseUser.observe(this) { firebaseUser ->
             if (firebaseUser != null) {
                 updateDrawerHeader(firebaseUser)
