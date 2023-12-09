@@ -43,6 +43,10 @@ class FoodJSONStore(private val context: Context) : FoodStore {
         return foundFood
     }
 
+    override fun findById(id: String, foods: List<FoodModel>): FoodModel? {
+        TODO("Not yet implemented")
+    }
+
     fun create(food: List<FoodModel>) {
         TODO("Not yet implemented")
     }
