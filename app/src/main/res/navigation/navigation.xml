@@ -76,7 +76,11 @@
         android:id="@+id/registerFragment"
         android:name="ie.setu.food.ui.account.RegisterFragment"
         android:label="@string/title_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/foodMapFragment"
         android:name="ie.setu.food.ui.food.FoodMapFragment"

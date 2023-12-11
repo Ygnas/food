@@ -56,7 +56,9 @@ class FoodFragment : Fragment() {
 
         val spinner = binding.spinner
         spinner.adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, FoodType.values())
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item,
+                FoodType.entries.toTypedArray()
+            )
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         setLocation()
@@ -105,8 +107,8 @@ class FoodFragment : Fragment() {
                     date = binding.editTextDate.text.toString(),
                     foodType = binding.spinner.selectedItem as FoodType,
                     uid = args.food?.uid,
-                    lat = args.food!!.lat,
-                    lng = args.food?.lng!!,
+                    lat = args.food?.lat ?: 0.0,
+                    lng = args.food?.lng ?: 0.0,
                     zoom = 16f
                 )
                 viewModel.addFood(loggedInViewModel.liveFirebaseUser, food)

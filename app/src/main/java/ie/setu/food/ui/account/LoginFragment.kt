@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import ie.setu.food.R
 import ie.setu.food.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -44,9 +46,12 @@ class LoginFragment : Fragment() {
             )
             viewModel.errorStatus.observe(viewLifecycleOwner) {
                 if (viewModel.errorStatus.value == true) {
-                    binding.loginError.setText("Error")
+                    binding.loginError.text = getString(R.string.register_error)
                 } else {
-                    binding.loginError.setText("")
+                    binding.loginError.text = ""
+                    Toast.makeText(requireContext(),
+                        "LoggedIn successfully",
+                        Toast.LENGTH_SHORT).show()
                 }
             }
         }
