@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import ie.setu.food.databinding.FragmentGalleryBinding
 import ie.setu.food.models.FoodModel
 import ie.setu.food.ui.account.LoggedInViewModel
-import ie.setu.food.views.gallery.ImageAdapter
-import ie.setu.food.views.gallery.ImageListener
+import ie.setu.food.adapters.ImageAdapter
+import ie.setu.food.adapters.ImageListener
 import timber.log.Timber
 
 class GalleryFragment : Fragment(), ImageListener {

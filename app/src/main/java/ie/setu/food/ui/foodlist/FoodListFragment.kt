@@ -10,11 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
+import ie.setu.food.R
+import ie.setu.food.adapters.FoodAdapter
+import ie.setu.food.adapters.FoodListener
 import ie.setu.food.databinding.FragmentFoodListBinding
 import ie.setu.food.models.FoodModel
 import ie.setu.food.ui.account.LoggedInViewModel
-import ie.setu.food.views.foodlist.FoodAdapter
-import ie.setu.food.views.foodlist.FoodListener
 import java.util.Date
 
 class FoodListFragment : Fragment(), FoodListener {
@@ -34,12 +35,18 @@ class FoodListFragment : Fragment(), FoodListener {
             foods?.let {
                 render(foods as ArrayList<FoodModel>)
             }
+            binding.swiperefresh.isRefreshing = false
         }
 
         viewModel.observableMainFoodList.observe(viewLifecycleOwner) { foods ->
             foods?.let {
                 viewModel.search("")
             }
+        }
+
+        binding.swiperefresh.setOnRefreshListener {
+            binding.swiperefresh.isRefreshing = true
+            viewModel.load()
         }
         setButtonListener()
         return binding.root
@@ -111,7 +118,7 @@ class FoodListFragment : Fragment(), FoodListener {
     }
 
     private fun setChip(text: String) {
-        binding.filterChip.text = "Filtering By Date: $text"
+        binding.filterChip.text = getString(R.string.filtering_by_date, text)
         binding.filterChip.visibility = View.VISIBLE
     }
 }

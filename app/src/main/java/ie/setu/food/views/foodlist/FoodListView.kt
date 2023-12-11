@@ -11,6 +11,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import ie.setu.food.R
+import ie.setu.food.adapters.FoodAdapter
+import ie.setu.food.adapters.FoodListener
 import ie.setu.food.databinding.ActivityFoodListBinding
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel
