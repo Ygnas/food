@@ -1,5 +1,7 @@
 package ie.setu.food.models
 
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
 import timber.log.Timber.i
 
 var lastId = 0L
@@ -16,9 +18,29 @@ class FoodMemStore: FoodStore {
         return foods
     }
 
+    override fun findAll(foodList: MutableLiveData<List<FoodModel>>) {
+        TODO("Not yet implemented")
+    }
+
     override fun findById(id: Long): FoodModel? {
         val foundFood: FoodModel? = foods.find { it.id == id }
         return foundFood
+    }
+
+    override fun findById(id: String, foods: List<FoodModel>): FoodModel? {
+        TODO("Not yet implemented")
+    }
+
+    fun create(food: List<FoodModel>) {
+        TODO("Not yet implemented")
+    }
+
+    fun create(food: MutableLiveData<List<FoodModel>>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, food: FoodModel) {
+        TODO("Not yet implemented")
     }
 
     override fun create(food: FoodModel) {

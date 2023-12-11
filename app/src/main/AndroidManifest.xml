@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -27,8 +26,14 @@
         android:theme="@style/Theme.Food"
         tools:targetApi="31">
         <activity
-            android:name=".views.camera.CameraPresenter"
-            android:exported="false" />
+            android:name=".ui.home.Home"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".views.camera.CameraView"
             android:exported="false" />
@@ -45,16 +50,13 @@
             android:exported="false"
             android:label="@string/title_login" />
         <activity
-            android:name=".views.gallery.GalleryPresenter"
-            android:exported="false" />
-        <activity
             android:name=".views.gallery.GalleryView"
             android:exported="false"
             android:label="@string/title_activity_gallery" />
         <activity
             android:name=".activities.FoodMapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_food_maps" >
+            android:label="@string/title_activity_food_maps">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -72,11 +74,6 @@
             android:name=".views.foodlist.FoodListView"
             android:exported="true"
             android:theme="@style/Theme.Food">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"

@@ -2,6 +2,8 @@ package ie.setu.food.models
 
 import android.content.Context
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import ie.setu.food.helpers.exists
@@ -31,10 +33,32 @@ class FoodJSONStore(private val context: Context) : FoodStore {
         logAll()
         return foods
     }
+
+    override fun findAll(foodList: MutableLiveData<List<FoodModel>>) {
+        TODO("Not yet implemented")
+    }
+
     override fun findById(id: Long): FoodModel? {
         val foundFood: FoodModel? = foods.find { it.id == id }
         return foundFood
     }
+
+    override fun findById(id: String, foods: List<FoodModel>): FoodModel? {
+        TODO("Not yet implemented")
+    }
+
+    fun create(food: List<FoodModel>) {
+        TODO("Not yet implemented")
+    }
+
+    fun create(food: MutableLiveData<List<FoodModel>>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, food: FoodModel) {
+        TODO("Not yet implemented")
+    }
+
     override fun create(food: FoodModel) {
         food.id = generateRandomId()
         foods.add(food)

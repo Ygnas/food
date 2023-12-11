@@ -3,7 +3,10 @@ package ie.setu.food.views.account
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
 import ie.setu.food.databinding.ActivityAccountViewBinding
+import ie.setu.food.firebase.FirebaseAuthentication
 import ie.setu.food.main.MainApp
 
 class AccountView : AppCompatActivity() {
@@ -24,13 +27,18 @@ class AccountView : AppCompatActivity() {
             supportActionBar?.setDisplayShowHomeEnabled(true)
         }
 
-        binding.toolbaraccount.title = title
+        val auth  = FirebaseAuthentication(app)
+        val liveFirebaseUser : MutableLiveData<FirebaseUser> = auth.liveFirebaseUser
 
-        val user = presenter.checkAccount()
-        binding.userUsername.text = user!!.username
+        binding.toolbaraccount.title = title
+        liveFirebaseUser.observe(this) { user ->
+            binding.userUsername.text = user?.email
+        }
 
         binding.buttonLogout.setOnClickListener{
-            presenter.doLogout()
+            auth.logOut()
+            presenter.doShowLogout()
+
         }
     }
 

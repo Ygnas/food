@@ -71,7 +71,7 @@ class FoodListPresenter(val view: FoodListView) {
         datePicker.addOnPositiveButtonClickListener { date ->
             val selectedDate = Date(date)
             val formattedDate = SimpleDateFormat.getDateInstance().format(selectedDate)
-            view.filterFoodsByDate(formattedDate)
+//            view.filterFoodsByDate(formattedDate)
             view.setChip(formattedDate)
         }
         datePicker.show(view.supportFragmentManager, "")

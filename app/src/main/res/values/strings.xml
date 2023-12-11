@@ -23,7 +23,7 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="button_gallery">Gallery </string>
-    <string name="hint_user">Username </string>
+    <string name="hint_user">Email </string>
     <string name="hint_pass">Password </string>
     <string name="login_text">Login </string>
     <string name="logout_text">Logout </string>
@@ -31,7 +31,8 @@
     <string name="register_error">Something was wrong </string>
     <string name="register_error_password">Password do not match</string>
     <string name="register_error_empty">Username or password cannot be empty</string>
-    <string name="register_error_short">Password must be 5 chars or longer</string>
+    <string name="register_error_short">Password must be 6 chars or longer</string>
+    <string name="register_error_invalid_email">Not a valid email address</string>
     <string name="success_login">Successfully logged in </string>
     <string name="hint_date">Date</string>
     <string name="register_button">Register</string>
