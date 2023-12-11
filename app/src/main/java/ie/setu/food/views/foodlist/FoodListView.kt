@@ -136,12 +136,12 @@ class FoodListView : AppCompatActivity(), FoodListener {
         onRefresh()
     }
 
-//    private fun searchFoods(query: String) {
-//        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
+    private fun searchFoods(query: String) {
+        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
 //        foodAdapter.search(query)
-//        binding.recyclerView.adapter = foodAdapter
-//        onRefresh()
-//    }
+        binding.recyclerView.adapter = foodAdapter
+        onRefresh()
+    }
 //
 //    fun filterFoodsByDate(query: String) {
 //        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
