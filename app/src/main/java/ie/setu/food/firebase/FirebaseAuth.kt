@@ -34,10 +34,10 @@ class FirebaseAuthentication(application: Application) {
     }
 
     fun login(email: String?, password: String?) {
-        firebaseAuth!!.signInWithEmailAndPassword(email!!, password!!)
+        firebaseAuth.signInWithEmailAndPassword(email!!, password!!)
             .addOnCompleteListener(application!!.mainExecutor) { task ->
                 if (task.isSuccessful) {
-                    liveFirebaseUser.postValue(firebaseAuth!!.currentUser)
+                    liveFirebaseUser.postValue(firebaseAuth.currentUser)
                     errorStatus.postValue(false)
                 } else {
                     i("Login Failure: $task.exception!!.message")
@@ -61,7 +61,7 @@ class FirebaseAuthentication(application: Application) {
     }
 
     fun logOut() {
-        firebaseAuth!!.signOut()
+        firebaseAuth.signOut()
         logout.postValue(true)
         errorStatus.postValue(false)
     }

@@ -1,11 +1,11 @@
 package ie.setu.food.views.gallery
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.GridLayoutManager
+import ie.setu.food.adapters.ImageAdapter
+import ie.setu.food.adapters.ImageListener
 import ie.setu.food.databinding.ActivityGalleryViewBinding
 import ie.setu.food.main.MainApp
 import ie.setu.food.models.FoodModel

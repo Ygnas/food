@@ -1,4 +1,4 @@
-package ie.setu.food.views.gallery
+package ie.setu.food.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

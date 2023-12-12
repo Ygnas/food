@@ -47,4 +47,11 @@ class FoodListViewModel : ViewModel() {
             search("")
         }
     }
+
+    fun delete(userid: String, id: String) {
+        try {
+            FirebaseDB.delete(userid, id)
+        } catch (_: Exception) {
+        }
+    }
 }

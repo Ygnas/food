@@ -1,24 +1,15 @@
 package ie.setu.food.firebase
 
-import android.graphics.BitmapFactory
-import android.net.Uri
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.core.Context
 import ie.setu.food.models.FoodModel
 import ie.setu.food.models.FoodStore
-import ie.setu.food.ui.food.FoodViewModel
-import ie.setu.food.ui.foodlist.FoodListViewModel
 import timber.log.Timber.i
-import java.security.Provider
 
 object FirebaseDB : FoodStore {
 
@@ -125,8 +116,12 @@ object FirebaseDB : FoodStore {
         TODO("Not yet implemented")
     }
 
-    override fun delete(food: FoodModel) {
-        TODO("Not yet implemented")
+    override fun delete(userid: String, id: String) {
+        val childDelete : MutableMap<String, Any?> = HashMap()
+        childDelete["/foods/$id"] = null
+        childDelete["/user-foods/$userid/$id"] = null
+
+        database.updateChildren(childDelete)
     }
 
     fun updateImageRef(userid: String, imageUri: String) {
