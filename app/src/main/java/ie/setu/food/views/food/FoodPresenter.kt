@@ -61,7 +61,7 @@ class FoodPresenter(private val view: FoodView) {
 
     fun doDelete() {
         view.setResult(99)
-        app.foods.delete(food)
+//        app.foods.delete(food)
         view.finish()
     }
 

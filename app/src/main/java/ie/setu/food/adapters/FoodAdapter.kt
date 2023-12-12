@@ -13,7 +13,7 @@ interface FoodListener {
 }
 
 class FoodAdapter constructor(
-    private var foods: List<FoodModel>,
+    private var foods: MutableList<FoodModel>,
     private val listener: FoodListener
 ) :
     RecyclerView.Adapter<FoodAdapter.MainHolder>() {
@@ -27,6 +27,11 @@ class FoodAdapter constructor(
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val food = foods[holder.adapterPosition]
         holder.bind(food, listener)
+    }
+
+    fun removeAt(position: Int) {
+        foods.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun getItemCount(): Int = foods.size

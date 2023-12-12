@@ -134,16 +134,16 @@ class FoodListView : AppCompatActivity(), FoodListener {
     }
 
     private fun loadFoods() {
-        binding.recyclerView.adapter = FoodAdapter(presenter.getFoods(), this)
+//        binding.recyclerView.adapter = FoodAdapter(presenter.getFoods(), this)
         onRefresh()
     }
 
-    private fun searchFoods(query: String) {
-        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
-//        foodAdapter.search(query)
-        binding.recyclerView.adapter = foodAdapter
-        onRefresh()
-    }
+//    private fun searchFoods(query: String) {
+//        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
+////        foodAdapter.search(query)
+//        binding.recyclerView.adapter = foodAdapter
+//        onRefresh()
+//    }
 //
 //    fun filterFoodsByDate(query: String) {
 //        val foodAdapter = FoodAdapter(presenter.getFoods(),this)
