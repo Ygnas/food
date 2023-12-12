@@ -134,7 +134,7 @@ class FoodListFragment : Fragment(), FoodListener {
     private var swipeTouchHelper = ItemTouchHelper(
         object : ItemTouchHelper.SimpleCallback(
             0,
-            ItemTouchHelper.LEFT
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -149,6 +149,14 @@ class FoodListFragment : Fragment(), FoodListener {
                     viewModel.delete(
                         viewModel.liveFirebaseUser.value?.uid.toString(),
                         (viewHolder.itemView.tag as FoodModel).uid.toString()
+                    )
+                }
+                if (direction == ItemTouchHelper.RIGHT) {
+                    val food = (viewHolder.itemView.tag as FoodModel)
+                    findNavController().navigate(
+                        FoodListFragmentDirections.actionNavHomeToFoodFragment(
+                            food
+                        )
                     )
                 }
             }
@@ -167,8 +175,11 @@ class FoodListFragment : Fragment(), FoodListener {
                     val startGreen = viewHolder.itemView.left.toFloat() + dX
                     val deleteIcon =
                         ContextCompat.getDrawable(requireContext(), R.drawable.baseline_delete_24)
+                    val editIcon =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.baseline_edit_24)
                     val paint = Paint()
                     if (dX < 0) {
+
                         paint.color = Color.RED
                         c.drawRect(
                             startRed,
@@ -198,6 +209,16 @@ class FoodListFragment : Fragment(), FoodListener {
                             viewHolder.itemView.bottom.toFloat(),
                             paint
                         )
+
+                        val editIconTop = viewHolder.itemView.top + (viewHolder.itemView.height - editIcon?.intrinsicHeight!!) / 2
+                        val editIconMargin = (viewHolder.itemView.height - editIcon.intrinsicHeight) / 2
+                        val editIconLeft = viewHolder.itemView.left + editIconMargin
+                        val editIconRight = viewHolder.itemView.left + editIconMargin + editIcon.intrinsicWidth
+                        val editIconBottom = editIconTop + editIcon.intrinsicHeight
+
+                        // Draw the edit icon
+                        editIcon.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom)
+                        editIcon.draw(c)
                     }
                     super.onChildDraw(
                         c,
