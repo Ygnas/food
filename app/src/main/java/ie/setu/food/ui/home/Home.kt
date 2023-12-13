@@ -52,7 +52,7 @@ class Home : AppCompatActivity() {
         )
 
         drawerHeaderBinding.logoutBtn.setOnClickListener {
-            loggedInViewModel.logOut()
+            loggedInViewModel.logOut(applicationContext)
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
