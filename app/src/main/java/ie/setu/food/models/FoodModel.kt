@@ -7,8 +7,6 @@ import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import kotlinx.parcelize.Parcelize
 
-var image: Uri = Uri.EMPTY
-
 @IgnoreExtraProperties
 @Parcelize
 data class FoodModel(
@@ -21,7 +19,8 @@ data class FoodModel(
     var foodType: FoodType = FoodType.BREAKFAST,
     var lat: Double = 0.0,
     var lng: Double = 0.0,
-    var zoom: Float = 0f
+    var zoom: Float = 0f,
+    var fav: Boolean = false
 ) : Parcelable {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -34,10 +33,10 @@ data class FoodModel(
             "foodType" to foodType.name,
             "lat" to lat,
             "lng" to lng,
-            "zoom" to zoom
+            "zoom" to zoom,
+            "fav" to fav
         )
     }
-
 
     companion object {
         fun fromMap(snapshot: DataSnapshot): FoodModel {
@@ -49,10 +48,11 @@ data class FoodModel(
                 description = value["description"] as String,
                 image = value["image"]?.toString().let { Uri.parse(it) },
                 date = value["date"] as String,
-                foodType = (value["foodType"] as? String).let {FoodType.valueOf(it!!)},
+                foodType = (value["foodType"] as? String).let { FoodType.valueOf(it!!) },
                 lat = (value["lat"] as Number).toDouble(),
                 lng = (value["lng"] as Number).toDouble(),
-                zoom = (value["zoom"] as Number).toFloat()
+                zoom = (value["zoom"] as Number).toFloat(),
+                fav = value["fav"] as Boolean
             )
         }
     }
