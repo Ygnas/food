@@ -112,6 +112,19 @@ object FirebaseDB : FoodStore {
         database.updateChildren(childAdd)
     }
 
+    fun setFavoriteStatus(firebaseUser: MutableLiveData<FirebaseUser>, food: FoodModel) {
+        val uid = firebaseUser.value?.uid ?: return
+        val key = food.uid ?: return
+
+        food.fav = !food.fav
+
+        val childUpdate = HashMap<String, Any>()
+        childUpdate["/foods/$key"] = food.toMap()
+        childUpdate["/user-foods/$uid/$key"] = food.toMap()
+
+        database.updateChildren(childUpdate)
+    }
+
     override fun update(food: FoodModel) {
         TODO("Not yet implemented")
     }
