@@ -17,7 +17,15 @@ object FirebaseStorage {
         val imageRef = storage.child("images").child("$uid.jpg")
         val stream = ByteArrayOutputStream()
 
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val targetSize = 200 * 1024
+        var quality = 100
+
+        do {
+            stream.reset()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
+            quality -= 5
+        } while (stream.toByteArray().size > targetSize && quality > 10)
+
         val data: ByteArray = stream.toByteArray()
 
         var uploadTask = imageRef.putBytes(data)
