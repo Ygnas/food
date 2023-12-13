@@ -57,7 +57,6 @@ class FirebaseAuthentication(application: Application) {
                     errorStatus.postValue(true)
                 }
             }
-
     }
 
     fun logOut() {
