@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -113,6 +114,8 @@ class FoodListFragment : Fragment(), FoodListener {
         binding.switch1.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
             viewModel.filterFav(b)
         }
+
+
     }
 
     private fun filterDate() {

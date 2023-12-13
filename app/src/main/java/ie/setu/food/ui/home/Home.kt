@@ -2,7 +2,10 @@ package ie.setu.food.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -20,6 +23,7 @@ import ie.setu.food.databinding.HomeMainBinding
 import ie.setu.food.ui.account.LoggedInViewModel
 import ie.setu.food.ui.foodlist.FoodListFragmentDirections
 
+
 class Home : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -31,7 +35,7 @@ class Home : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         homeBinding = HomeMainBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
         loggedInViewModel = ViewModelProvider(this)[LoggedInViewModel::class.java]
@@ -55,8 +59,57 @@ class Home : AppCompatActivity() {
             loggedInViewModel.logOut(applicationContext)
         }
 
+        drawerHeaderBinding.switch2.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
+            setDayNightMode(!b)
+        }
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        checkNightMode()
+    }
+
+    fun setDayNightMode(day: Boolean) {
+        if (day) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) else AppCompatDelegate.setDefaultNightMode(
+            AppCompatDelegate.MODE_NIGHT_YES
+        )
+    }
+
+    fun checkNightMode() {
+        val mode = AppCompatDelegate.getDefaultNightMode()
+
+        when (mode) {
+
+            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY -> {
+                TODO()
+            }
+
+            AppCompatDelegate.MODE_NIGHT_AUTO_TIME -> {
+                TODO()
+            }
+
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
+                TODO()
+            }
+
+            AppCompatDelegate.MODE_NIGHT_NO -> {
+                TODO()
+            }
+
+            AppCompatDelegate.MODE_NIGHT_UNSPECIFIED -> {
+                TODO()
+            }
+
+            AppCompatDelegate.MODE_NIGHT_YES -> {
+                TODO()
+            }
+        }
+        if (mode == -100 || mode == 1) {
+            drawerHeaderBinding.switch2.isChecked = false
+        } else {
+            drawerHeaderBinding.switch2.isChecked = true
+        }
     }
 
     override fun onStart() {
