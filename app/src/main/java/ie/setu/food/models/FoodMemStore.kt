@@ -64,7 +64,11 @@ class FoodMemStore: FoodStore {
         }
     }
 
-    override fun delete(food: FoodModel) {
+    override fun delete(userid: String, id: String) {
+        TODO("Not yet implemented")
+    }
+
+    fun delete(food: FoodModel) {
         foods.remove(food)
     }
 
