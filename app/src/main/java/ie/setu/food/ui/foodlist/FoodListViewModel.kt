@@ -48,6 +48,20 @@ class FoodListViewModel : ViewModel() {
         }
     }
 
+    fun filterFav(bool: Boolean) {
+        if (bool) {
+            filteredFoodList.postValue(foodList.value?.filter {
+                it.fav
+            })
+        } else {
+            filteredFoodList.postValue(foodList.value)
+        }
+    }
+
+    fun setFav(food: FoodModel) {
+        FirebaseDB.setFavoriteStatus(liveFirebaseUser, food)
+    }
+
     fun delete(userid: String, id: String) {
         try {
             FirebaseDB.delete(userid, id)
