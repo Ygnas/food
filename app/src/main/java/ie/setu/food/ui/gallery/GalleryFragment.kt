@@ -47,9 +47,7 @@ class GalleryFragment : Fragment(), ImageListener {
         }
     }
 
-    override fun onFoodClick(food: FoodModel, position: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun onFoodClick(food: FoodModel, position: Int) {}
 
     override fun onResume() {
         super.onResume()
