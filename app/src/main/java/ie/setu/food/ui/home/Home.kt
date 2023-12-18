@@ -2,7 +2,10 @@ package ie.setu.food.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -20,6 +23,7 @@ import ie.setu.food.databinding.HomeMainBinding
 import ie.setu.food.ui.account.LoggedInViewModel
 import ie.setu.food.ui.foodlist.FoodListFragmentDirections
 
+
 class Home : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -31,7 +35,6 @@ class Home : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         homeBinding = HomeMainBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
         loggedInViewModel = ViewModelProvider(this)[LoggedInViewModel::class.java]
@@ -55,8 +58,26 @@ class Home : AppCompatActivity() {
             loggedInViewModel.logOut(applicationContext)
         }
 
+        drawerHeaderBinding.switch2.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
+            setDayNightMode(!b)
+        }
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        checkNightMode()
+    }
+
+    private fun setDayNightMode(day: Boolean) {
+        if (day) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) else AppCompatDelegate.setDefaultNightMode(
+            AppCompatDelegate.MODE_NIGHT_YES
+        )
+    }
+
+    private fun checkNightMode() {
+        val nightMode = getString(R.string.test_night_mode)
+        drawerHeaderBinding.switch2.isChecked = nightMode.toBoolean()
     }
 
     override fun onStart() {
