@@ -35,7 +35,6 @@ class Home : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         homeBinding = HomeMainBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
         loggedInViewModel = ViewModelProvider(this)[LoggedInViewModel::class.java]
@@ -70,46 +69,15 @@ class Home : AppCompatActivity() {
         checkNightMode()
     }
 
-    fun setDayNightMode(day: Boolean) {
+    private fun setDayNightMode(day: Boolean) {
         if (day) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) else AppCompatDelegate.setDefaultNightMode(
             AppCompatDelegate.MODE_NIGHT_YES
         )
     }
 
-    fun checkNightMode() {
-        val mode = AppCompatDelegate.getDefaultNightMode()
-
-        when (mode) {
-
-            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY -> {
-                TODO()
-            }
-
-            AppCompatDelegate.MODE_NIGHT_AUTO_TIME -> {
-                TODO()
-            }
-
-            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
-                TODO()
-            }
-
-            AppCompatDelegate.MODE_NIGHT_NO -> {
-                TODO()
-            }
-
-            AppCompatDelegate.MODE_NIGHT_UNSPECIFIED -> {
-                TODO()
-            }
-
-            AppCompatDelegate.MODE_NIGHT_YES -> {
-                TODO()
-            }
-        }
-        if (mode == -100 || mode == 1) {
-            drawerHeaderBinding.switch2.isChecked = false
-        } else {
-            drawerHeaderBinding.switch2.isChecked = true
-        }
+    private fun checkNightMode() {
+        val nightMode = getString(R.string.test_night_mode)
+        drawerHeaderBinding.switch2.isChecked = nightMode.toBoolean()
     }
 
     override fun onStart() {
