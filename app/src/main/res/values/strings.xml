@@ -39,4 +39,6 @@
     <string name="take_photo">Take Photo</string>
     <string name="description_filter">Filtering icon</string>
     <string name="filtering_by_date">Filtering By Date: %s</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="test_night_mode">false</string>
 </resources>
