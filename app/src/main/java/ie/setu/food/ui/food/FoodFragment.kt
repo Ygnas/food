@@ -26,6 +26,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import ie.setu.food.R
 import ie.setu.food.databinding.FragmentFoodBinding
 import ie.setu.food.firebase.FirebaseDB
 import ie.setu.food.firebase.FirebaseStorage
@@ -65,6 +66,7 @@ class FoodFragment : Fragment() {
         cameraImageIntent()
 
         args.food?.let { food ->
+            binding.btnAdd.text = getString(R.string.save_food)
             with(food) {
                 binding.foodTitle.setText(title)
                 binding.foodDescription.setText(description)
