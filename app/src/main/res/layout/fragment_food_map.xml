@@ -91,6 +91,20 @@
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton" />
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch3"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/only_favourite_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackThickness="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

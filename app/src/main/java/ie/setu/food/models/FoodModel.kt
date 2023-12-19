@@ -10,7 +10,6 @@ import kotlinx.parcelize.Parcelize
 @IgnoreExtraProperties
 @Parcelize
 data class FoodModel(
-    var id: Long = 0,
     var uid: String? = "",
     var title: String = "",
     var description: String = "",
@@ -42,7 +41,6 @@ data class FoodModel(
         fun fromMap(snapshot: DataSnapshot): FoodModel {
             val value = snapshot.value as Map<String, Any?>
             return FoodModel(
-                id = (value["id"] as? Long) ?: 0L,
                 uid = value["uid"] as? String,
                 title = value["title"] as String,
                 description = value["description"] as String,

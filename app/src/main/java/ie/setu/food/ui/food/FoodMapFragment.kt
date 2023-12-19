@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ class FoodMapFragment : Fragment(), GoogleMap.OnMapClickListener, GoogleMap.OnMa
     private val viewModel: FoodListViewModel by activityViewModels()
     private val viewModelFood: FoodViewModel by activityViewModels()
     private lateinit var map: GoogleMap
+    private val markerList: MutableList<Marker> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +49,10 @@ class FoodMapFragment : Fragment(), GoogleMap.OnMapClickListener, GoogleMap.OnMa
             }
         }
 
+        binding.switch3.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
+            viewModel.filterFav(b)
+            configureMap()
+        }
 
         binding.floatingActionButton.setOnClickListener {
             binding.mapList.visibility =
@@ -63,17 +69,28 @@ class FoodMapFragment : Fragment(), GoogleMap.OnMapClickListener, GoogleMap.OnMa
     private fun configureMap() {
         map.uiSettings.isZoomControlsEnabled = true
         viewModel.observableFoodList.observe(viewLifecycleOwner) { foods ->
+            clearMarkers()
             foods?.forEach {
                 if (it.lat != 0.0 || it.lng != 0.0) {
                     val loc = LatLng(it.lat, it.lng)
                     val options = MarkerOptions().title(it.title).position(loc)
                     map.setOnMapClickListener(this)
                     map.setOnMarkerClickListener(this)
-                    map.addMarker(options)?.tag = it.uid
+                    val marker = map.addMarker(options)
+                    marker?.tag = it.uid
+                    markerList.add(marker!!)
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
                 }
             }
         }
+    }
+
+    private fun clearMarkers() {
+        for (marker in markerList) {
+            marker.remove()
+        }
+        markerList.clear()
+
     }
 
     override fun onMapClick(p0: LatLng) {
