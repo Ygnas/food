@@ -37,6 +37,7 @@ import ie.setu.food.models.FoodType
 import ie.setu.food.ui.account.LoggedInViewModel
 import ie.setu.food.views.camera.CameraView
 import java.util.Date
+import java.util.Locale
 
 class FoodFragment : Fragment() {
 
@@ -86,8 +87,10 @@ class FoodFragment : Fragment() {
         }
         if (binding.editTextDate.text.isNullOrEmpty()) {
             binding.editTextDate.setText(
-                SimpleDateFormat.getDateInstance()
-                    .format(MaterialDatePicker.todayInUtcMilliseconds())
+                SimpleDateFormat(
+                    "dd MMM yyyy",
+                    Locale.UK
+                ).format(MaterialDatePicker.todayInUtcMilliseconds())
             )
         }
 
@@ -153,7 +156,7 @@ class FoodFragment : Fragment() {
 
         datePicker.addOnPositiveButtonClickListener { date ->
             val selectedDate = Date(date)
-            val formattedDate = SimpleDateFormat.getDateInstance().format(selectedDate)
+            val formattedDate = SimpleDateFormat("dd MMM yyyy", Locale.UK).format(selectedDate)
 
             binding.editTextDate.setText(formattedDate)
         }
