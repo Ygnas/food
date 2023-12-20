@@ -25,6 +25,7 @@ import ie.setu.food.databinding.FragmentFoodListBinding
 import ie.setu.food.models.FoodModel
 import ie.setu.food.ui.account.LoggedInViewModel
 import java.util.Date
+import java.util.Locale
 
 
 class FoodListFragment : Fragment(), FoodListener {
@@ -126,7 +127,10 @@ class FoodListFragment : Fragment(), FoodListener {
 
         datePicker.addOnPositiveButtonClickListener { date ->
             val selectedDate = Date(date)
-            val formattedDate = SimpleDateFormat.getDateInstance().format(selectedDate)
+            val formattedDate = SimpleDateFormat(
+                "dd MMM yyyy",
+                Locale.UK
+            ).format(selectedDate)
             viewModel.filterByDate(formattedDate)
             setChip(formattedDate)
         }
