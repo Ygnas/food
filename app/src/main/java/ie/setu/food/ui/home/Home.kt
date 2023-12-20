@@ -1,5 +1,7 @@
 package ie.setu.food.ui.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -63,7 +65,6 @@ class Home : AppCompatActivity() {
             setDayNightMode(!b)
         }
 
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -71,14 +72,33 @@ class Home : AppCompatActivity() {
     }
 
     private fun setDayNightMode(day: Boolean) {
-        if (day) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) else AppCompatDelegate.setDefaultNightMode(
-            AppCompatDelegate.MODE_NIGHT_YES
-        )
+        if (day) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            saveNightMode(false)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES
+            )
+            saveNightMode(true)
+        }
+    }
+
+    private fun saveNightMode(day: Boolean) {
+        val sharedPreferences: SharedPreferences? =
+            getPreferences(Context.MODE_PRIVATE)
+        sharedPreferences!!.edit().putString("nightmode", day.toString()).apply()
     }
 
     private fun checkNightMode() {
+        val sharedPreferences: SharedPreferences? =
+            getPreferences(Context.MODE_PRIVATE)
         val nightMode = getString(R.string.test_night_mode)
-        drawerHeaderBinding.switch2.isChecked = nightMode.toBoolean()
+        val pref = sharedPreferences!!.getString("nightmode", null)
+        if (!pref.isNullOrEmpty()) {
+            drawerHeaderBinding.switch2.isChecked = pref.toBoolean()
+        } else {
+            drawerHeaderBinding.switch2.isChecked = nightMode.toBoolean()
+        }
     }
 
     override fun onStart() {
