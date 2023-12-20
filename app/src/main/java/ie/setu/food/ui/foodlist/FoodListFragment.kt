@@ -152,10 +152,12 @@ class FoodListFragment : Fragment(), FoodListener {
 
             override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
                 if (direction == ItemTouchHelper.LEFT) {
+                    val uid = (viewHolder.itemView.tag as FoodModel).uid.toString()
                     (binding.recyclerView.adapter as FoodAdapter).removeAt(viewHolder.adapterPosition)
+                    viewModel.deleteImage(uid)
                     viewModel.delete(
                         viewModel.liveFirebaseUser.value?.uid.toString(),
-                        (viewHolder.itemView.tag as FoodModel).uid.toString()
+                        uid
                     )
                 }
                 if (direction == ItemTouchHelper.RIGHT) {
