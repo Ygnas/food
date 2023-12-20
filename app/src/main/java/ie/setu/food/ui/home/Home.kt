@@ -1,9 +1,10 @@
 package ie.setu.food.ui.home
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
@@ -109,5 +110,34 @@ class Home : AppCompatActivity() {
         drawerHeaderBinding.username.text = user.email
         drawerHeaderBinding.logoutBtn.visibility = View.VISIBLE
         homeBinding.navView.menu.findItem(R.id.loginFragment).isVisible = false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.foodFragment -> {
+                navController.navigateUp()
+                navController.navigate(FoodListFragmentDirections.actionNavHomeToFoodFragment())
+                true
+            }
+
+            R.id.galleryFragment -> {
+                navController.navigateUp()
+                navController.navigate(FoodListFragmentDirections.actionNavHomeToGalleryFragment())
+                true
+            }
+
+            R.id.foodMapFragment -> {
+                navController.navigateUp()
+                navController.navigate(FoodListFragmentDirections.actionNavHomeToFoodMapFragment())
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
