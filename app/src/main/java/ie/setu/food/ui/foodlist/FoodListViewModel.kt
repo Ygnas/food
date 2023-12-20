@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import ie.setu.food.firebase.FirebaseDB
+import ie.setu.food.firebase.FirebaseStorage
 import ie.setu.food.models.FoodModel
 
 class FoodListViewModel : ViewModel() {
@@ -67,5 +68,9 @@ class FoodListViewModel : ViewModel() {
             FirebaseDB.delete(userid, id)
         } catch (_: Exception) {
         }
+    }
+
+    fun deleteImage(uid: String) {
+        FirebaseStorage.deleteImageFromFirebase(uid)
     }
 }

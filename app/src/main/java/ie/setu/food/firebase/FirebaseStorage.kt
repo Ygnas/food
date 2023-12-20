@@ -57,4 +57,9 @@ object FirebaseStorage {
             imageView.setImageDrawable(null)
         }
     }
+
+    fun deleteImageFromFirebase(uid: String) {
+        val imageRef = storage.child("images").child("$uid.jpg")
+        imageRef.delete()
+    }
 }
