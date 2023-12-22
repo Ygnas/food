@@ -27,7 +27,6 @@ import ie.setu.food.ui.account.LoggedInViewModel
 import java.util.Date
 import java.util.Locale
 
-
 class FoodListFragment : Fragment(), FoodListener {
 
     private lateinit var binding: FragmentFoodListBinding
