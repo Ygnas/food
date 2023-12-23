@@ -34,16 +34,20 @@ class FirebaseAuthentication(application: Application) {
     }
 
     fun login(email: String?, password: String?) {
-        firebaseAuth.signInWithEmailAndPassword(email!!, password!!)
-            .addOnCompleteListener(application!!.mainExecutor) { task ->
-                if (task.isSuccessful) {
-                    liveFirebaseUser.postValue(firebaseAuth.currentUser)
-                    errorStatus.postValue(false)
-                } else {
-                    i("Login Failure: $task.exception!!.message")
-                    errorStatus.postValue(true)
+        try {
+            firebaseAuth.signInWithEmailAndPassword(email!!, password!!)
+                .addOnCompleteListener(application!!.mainExecutor) { task ->
+                    if (task.isSuccessful) {
+                        liveFirebaseUser.postValue(firebaseAuth.currentUser)
+                        errorStatus.postValue(false)
+                    } else {
+                        i("Login Failure: $task.exception!!.message")
+                        errorStatus.postValue(true)
+                    }
                 }
-            }
+        } catch (_: Exception) {
+            errorStatus.postValue(true)
+        }
     }
 
     fun register(email: String, password: String) {
