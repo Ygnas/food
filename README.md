@@ -6,6 +6,8 @@
 ![Flow diagram](/images/flow.png)
 ### Class diagram
 ![Class diagram](/images/class.png)
+### Class diagram for whole application
+![Diagram](/images/diagram.png)
 
 ## UX / DX Approach
 Approach aligns with modern Android app development best practices, combining several key principles and technologies.
