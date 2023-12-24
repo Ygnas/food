@@ -24,8 +24,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import ie.setu.food.R
 import ie.setu.food.databinding.FragmentFoodBinding
 import ie.setu.food.firebase.FirebaseDB
 import ie.setu.food.firebase.FirebaseStorage
@@ -35,6 +37,7 @@ import ie.setu.food.models.FoodType
 import ie.setu.food.ui.account.LoggedInViewModel
 import ie.setu.food.views.camera.CameraView
 import java.util.Date
+import java.util.Locale
 
 class FoodFragment : Fragment() {
 
@@ -46,6 +49,7 @@ class FoodFragment : Fragment() {
     private lateinit var imageUri: Uri
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var loc: LatLng
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +60,8 @@ class FoodFragment : Fragment() {
 
         val spinner = binding.spinner
         spinner.adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item,
+            ArrayAdapter(
+                requireContext(), android.R.layout.simple_spinner_item,
                 FoodType.entries.toTypedArray()
             )
 
@@ -65,6 +70,7 @@ class FoodFragment : Fragment() {
         cameraImageIntent()
 
         args.food?.let { food ->
+            binding.btnAdd.text = getString(R.string.save_food)
             with(food) {
                 binding.foodTitle.setText(title)
                 binding.foodDescription.setText(description)
@@ -81,8 +87,10 @@ class FoodFragment : Fragment() {
         }
         if (binding.editTextDate.text.isNullOrEmpty()) {
             binding.editTextDate.setText(
-                SimpleDateFormat.getDateInstance()
-                    .format(MaterialDatePicker.todayInUtcMilliseconds())
+                SimpleDateFormat(
+                    "dd MMM yyyy",
+                    Locale.UK
+                ).format(MaterialDatePicker.todayInUtcMilliseconds())
             )
         }
 
@@ -95,7 +103,7 @@ class FoodFragment : Fragment() {
             if (binding.foodTitle.text.toString().isEmpty()) {
                 Snackbar.make(
                     binding.root,
-                    ie.setu.food.R.string.enter_food_title,
+                    R.string.enter_food_title,
                     Snackbar.LENGTH_LONG
                 )
                     .show()
@@ -107,8 +115,8 @@ class FoodFragment : Fragment() {
                     date = binding.editTextDate.text.toString(),
                     foodType = binding.spinner.selectedItem as FoodType,
                     uid = args.food?.uid,
-                    lat = args.food?.lat ?: 0.0,
-                    lng = args.food?.lng ?: 0.0,
+                    lat = loc.latitude,
+                    lng = loc.longitude,
                     zoom = 16f
                 )
                 viewModel.addFood(loggedInViewModel.liveFirebaseUser, food)
@@ -148,7 +156,7 @@ class FoodFragment : Fragment() {
 
         datePicker.addOnPositiveButtonClickListener { date ->
             val selectedDate = Date(date)
-            val formattedDate = SimpleDateFormat.getDateInstance().format(selectedDate)
+            val formattedDate = SimpleDateFormat("dd MMM yyyy", Locale.UK).format(selectedDate)
 
             binding.editTextDate.setText(formattedDate)
         }
@@ -175,8 +183,9 @@ class FoodFragment : Fragment() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 location?.let {
-                    args.food?.lat = location.latitude
-                    args.food?.lng = location.longitude
+//                    args.food?.lat = location.latitude
+//                    args.food?.lng = location.longitude
+                    loc = LatLng(location.latitude, location.longitude)
                 }
             }
     }

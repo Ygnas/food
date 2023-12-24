@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -24,7 +25,7 @@ import ie.setu.food.databinding.FragmentFoodListBinding
 import ie.setu.food.models.FoodModel
 import ie.setu.food.ui.account.LoggedInViewModel
 import java.util.Date
-
+import java.util.Locale
 
 class FoodListFragment : Fragment(), FoodListener {
 
@@ -108,6 +109,12 @@ class FoodListFragment : Fragment(), FoodListener {
             binding.filterChip.visibility = View.GONE
             viewModel.filterByDate("")
         }
+
+        binding.switch1.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
+            viewModel.filterFav(b)
+        }
+
+
     }
 
     private fun filterDate() {
@@ -119,7 +126,10 @@ class FoodListFragment : Fragment(), FoodListener {
 
         datePicker.addOnPositiveButtonClickListener { date ->
             val selectedDate = Date(date)
-            val formattedDate = SimpleDateFormat.getDateInstance().format(selectedDate)
+            val formattedDate = SimpleDateFormat(
+                "dd MMM yyyy",
+                Locale.UK
+            ).format(selectedDate)
             viewModel.filterByDate(formattedDate)
             setChip(formattedDate)
         }
@@ -145,19 +155,20 @@ class FoodListFragment : Fragment(), FoodListener {
 
             override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
                 if (direction == ItemTouchHelper.LEFT) {
+                    val uid = (viewHolder.itemView.tag as FoodModel).uid.toString()
                     (binding.recyclerView.adapter as FoodAdapter).removeAt(viewHolder.adapterPosition)
+                    viewModel.deleteImage(uid)
                     viewModel.delete(
                         viewModel.liveFirebaseUser.value?.uid.toString(),
-                        (viewHolder.itemView.tag as FoodModel).uid.toString()
+                        uid
                     )
                 }
                 if (direction == ItemTouchHelper.RIGHT) {
                     val food = (viewHolder.itemView.tag as FoodModel)
-                    findNavController().navigate(
-                        FoodListFragmentDirections.actionNavHomeToFoodFragment(
-                            food
-                        )
-                    )
+                    binding.switch1.isChecked = false
+                    viewModel.setFav(food)
+                    viewHolder.itemView.translationX = 0f
+                    (binding.recyclerView.adapter as FoodAdapter).notifyItemChanged(viewHolder.adapterPosition)
                 }
             }
 
@@ -175,8 +186,11 @@ class FoodListFragment : Fragment(), FoodListener {
                     val startGreen = viewHolder.itemView.left.toFloat() + dX
                     val deleteIcon =
                         ContextCompat.getDrawable(requireContext(), R.drawable.baseline_delete_24)
-                    val editIcon =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.baseline_edit_24)
+                    val facIcon =
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.baseline_auto_awesome_24
+                        )
                     val paint = Paint()
                     if (dX < 0) {
 
@@ -201,7 +215,8 @@ class FoodListFragment : Fragment(), FoodListener {
                         deleteIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
                         deleteIcon.draw(c)
                     } else {
-                        paint.color = Color.GREEN
+                        val food = viewHolder.itemView.tag as FoodModel
+                        paint.color = if (food.fav) Color.RED else Color.GREEN
                         c.drawRect(
                             viewHolder.itemView.left.toFloat(),
                             viewHolder.itemView.top.toFloat(),
@@ -210,15 +225,18 @@ class FoodListFragment : Fragment(), FoodListener {
                             paint
                         )
 
-                        val editIconTop = viewHolder.itemView.top + (viewHolder.itemView.height - editIcon?.intrinsicHeight!!) / 2
-                        val editIconMargin = (viewHolder.itemView.height - editIcon.intrinsicHeight) / 2
-                        val editIconLeft = viewHolder.itemView.left + editIconMargin
-                        val editIconRight = viewHolder.itemView.left + editIconMargin + editIcon.intrinsicWidth
-                        val editIconBottom = editIconTop + editIcon.intrinsicHeight
+                        val favIconTop =
+                            viewHolder.itemView.top + (viewHolder.itemView.height - facIcon?.intrinsicHeight!!) / 2
+                        val favIconMargin =
+                            (viewHolder.itemView.height - facIcon.intrinsicHeight) / 2
+                        val favIconLeft = viewHolder.itemView.left + favIconMargin
+                        val favIconRight =
+                            viewHolder.itemView.left + favIconMargin + facIcon.intrinsicWidth
+                        val favIconBottom = favIconTop + facIcon.intrinsicHeight
 
                         // Draw the edit icon
-                        editIcon.setBounds(editIconLeft, editIconTop, editIconRight, editIconBottom)
-                        editIcon.draw(c)
+                        facIcon.setBounds(favIconLeft, favIconTop, favIconRight, favIconBottom)
+                        facIcon.draw(c)
                     }
                     super.onChildDraw(
                         c,

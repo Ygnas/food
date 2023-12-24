@@ -30,7 +30,14 @@
             app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_nav_home_to_foodMapFragment"
-            app:destination="@id/foodMapFragment" />
+            app:destination="@id/foodMapFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_chartFragment"
+            app:destination="@id/chartFragment" />
     </fragment>
     <fragment
         android:id="@+id/foodFragment"
@@ -86,4 +93,9 @@
         android:name="ie.setu.food.ui.food.FoodMapFragment"
         android:label="@string/title_activity_food_maps"
         tools:layout="@layout/fragment_food_map" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="ie.setu.food.ui.chart.ChartFragment"
+        android:label="@string/title_chart"
+        tools:layout="@layout/fragment_chart" />
 </navigation>

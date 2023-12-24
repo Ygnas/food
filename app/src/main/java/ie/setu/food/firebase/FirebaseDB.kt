@@ -22,10 +22,6 @@ object FirebaseDB : FoodStore {
             keyUsed.value = value.value
         }
 
-    override fun findAll(): List<FoodModel> {
-        TODO("Not yet implemented")
-    }
-
     override fun findAll(foodList: MutableLiveData<List<FoodModel>>) {
         database.child("foods")
             .addValueEventListener(object : ValueEventListener {
@@ -46,10 +42,6 @@ object FirebaseDB : FoodStore {
                     foodList.value = localList
                 }
             })
-    }
-
-    override fun findById(id: Long): FoodModel? {
-        TODO("Not yet implemented")
     }
 
     fun findAll(userid: String, foodList: MutableLiveData<List<FoodModel>>) {
@@ -88,14 +80,6 @@ object FirebaseDB : FoodStore {
 
     }
 
-    fun findById(uid: String, id: Long) {
-        TODO("Not yet implemented")
-    }
-
-    override fun create(food: FoodModel) {
-        TODO("Not yet implemented")
-    }
-
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, food: FoodModel) {
         val uid = firebaseUser.value?.uid
         val key = if (food.uid.isNullOrEmpty()) {
@@ -112,8 +96,17 @@ object FirebaseDB : FoodStore {
         database.updateChildren(childAdd)
     }
 
-    override fun update(food: FoodModel) {
-        TODO("Not yet implemented")
+    fun setFavoriteStatus(firebaseUser: MutableLiveData<FirebaseUser>, food: FoodModel) {
+        val uid = firebaseUser.value?.uid ?: return
+        val key = food.uid ?: return
+
+        food.fav = !food.fav
+
+        val childUpdate = HashMap<String, Any>()
+        childUpdate["/foods/$key"] = food.toMap()
+        childUpdate["/user-foods/$uid/$key"] = food.toMap()
+
+        database.updateChildren(childUpdate)
     }
 
     override fun delete(userid: String, id: String) {

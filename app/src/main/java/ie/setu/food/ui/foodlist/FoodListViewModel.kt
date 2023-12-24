@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import ie.setu.food.firebase.FirebaseDB
+import ie.setu.food.firebase.FirebaseStorage
 import ie.setu.food.models.FoodModel
 
 class FoodListViewModel : ViewModel() {
@@ -48,10 +49,28 @@ class FoodListViewModel : ViewModel() {
         }
     }
 
+    fun filterFav(bool: Boolean) {
+        if (bool) {
+            filteredFoodList.postValue(foodList.value?.filter {
+                it.fav
+            })
+        } else {
+            filteredFoodList.postValue(foodList.value)
+        }
+    }
+
+    fun setFav(food: FoodModel) {
+        FirebaseDB.setFavoriteStatus(liveFirebaseUser, food)
+    }
+
     fun delete(userid: String, id: String) {
         try {
             FirebaseDB.delete(userid, id)
         } catch (_: Exception) {
         }
+    }
+
+    fun deleteImage(uid: String) {
+        FirebaseStorage.deleteImageFromFirebase(uid)
     }
 }

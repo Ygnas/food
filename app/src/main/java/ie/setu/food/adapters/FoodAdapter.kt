@@ -42,8 +42,6 @@ class FoodAdapter constructor(
         fun bind(food: FoodModel, listener: FoodListener) {
             binding.root.tag = food
             binding.food = food
-            binding.foodTitle.text = food.title
-            binding.description.text = food.description
             FirebaseStorage.loadImageFromFirebase(food.uid!!, binding.imageIcon, 200)
             binding.root.setOnClickListener { listener.onFoodClick(food, adapterPosition) }
             binding.executePendingBindings()
