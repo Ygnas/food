@@ -21,8 +21,6 @@
 ## UML & Class Diagrams
 ### Application flow diagram
 ![Flow diagram](/images/flow.png)
-### Class diagram
-![Class diagram](/images/class.png)
 ### Class diagram for whole application
 ![Diagram](/images/diagram.png)
 
